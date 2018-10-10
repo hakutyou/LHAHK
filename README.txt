@@ -1,0 +1,6 @@
+** pyHook for python3
+[[http://www.swig.org/download.html]] 下载 swig.zip
+将解压的文件夹添加到环境变量
+#+BEGIN_SRC bash
+pip install PyHook3
+#+END_SRC
