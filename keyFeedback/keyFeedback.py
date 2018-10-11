@@ -1,9 +1,11 @@
-__all__ = ['PRESS_MAPPING', 'RELEASE_MAPPING']
+__all__ = ['PRESS_MAPPING', 'RELEASE_MAPPING', 'locker']
 
 import copy
-import win32api
-import win32con
-from . import vkcode
+from . import keyHolder
+
+key_holder = keyHolder.KeyHolder()
+PRESS_MAPPING = {}
+RELEASE_MAPPING = {}
 
 
 def print_window_title(window_name: str):
@@ -16,12 +18,12 @@ def reverse_window_title(window_name: str):
 
 def hold_a_key(_: str):
         print('hold a key')
-        win32api.keybd_event(vkcode.VK_CODE['q'], 0, 0, 0)
+        key_holder.press('q')
 
 
 def release_a_key(_: str):
         print('release a key')
-        win32api.keybd_event(vkcode.VK_CODE['q'], 0, win32con.KEYEVENTF_KEYUP, 0)
+        key_holder.release('q')
 
 
 def switch_mapping(new_mapping):
@@ -36,19 +38,18 @@ class KeyFeedback:
                 self.debug = debug
 
                 global PRESS_MAPPING, RELEASE_MAPPING
-                self.MAPPING1 = {"['A']": print_window_title,
-                                 "['S']": lambda _: switch_mapping(self.MAPPING2),
+                self.MAPPING1 = {"#['A']": print_window_title,
+                                 "#['S']": lambda _: switch_mapping(self.MAPPING2),
                                  "['D']": hold_a_key}
-                self.MAPPING2 = {"['A']": reverse_window_title,
-                                 "['S']": lambda _: switch_mapping(self.MAPPING1)}
+                self.MAPPING2 = {"#['A']": reverse_window_title,
+                                 "#['S']": lambda _: switch_mapping(self.MAPPING1)}
                 self.REMAPPING1 = {"['D']": release_a_key}
 
                 PRESS_MAPPING = copy.deepcopy(self.MAPPING1)
                 RELEASE_MAPPING = copy.deepcopy(self.REMAPPING1)
 
 
-PRESS_MAPPING = {}
-RELEASE_MAPPING = {}
+locker = key_holder.hold_lock
 
 if __name__ == '__main__':
         import threading
