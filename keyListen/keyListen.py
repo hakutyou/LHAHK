@@ -33,19 +33,22 @@ class KeyListen:
                         print('正处于"{0}"窗口'.format(window_name))
 
                 new_key = False
-                if event.Key not in self.press_key:
-                        self.press_key.append(event.Key)
-                        new_key = True
-                hold_key_str = str(self.press_key)
                 if response:
-                        if new_key and self.debug:
-                                print('刚刚按下了"{0}"键'.format(self.press_key))
+                        if event.Key not in self.press_key:
+                                self.press_key.append(event.Key)
+                                new_key = True
+                                if self.debug:
+                                        print('刚刚按下了"{0}"键'.format(self.press_key))
                         mapping = self.press_mapping
+                        hold_key_str = str(self.press_key)
                 else:
-                        if new_key and self.debug:
-                                print('刚刚抬起了"{0}"键, {1}'.format(
-                                        event.Key, self.press_key))
                         mapping = self.release_mapping
+                        hold_key_str = str(self.press_key)
+                        if event.Key in self.press_key:
+                                self.press_key.remove(event.Key)
+                                if self.debug:
+                                        print('刚刚抬起了"{0}"键, {1}'.format(
+                                                event.Key, self.press_key))
 
                 _target = ''
                 if hold_key_str in mapping:
