@@ -4,6 +4,7 @@ from ctypes import *
 from functools import partial
 import PyHook3 as pyHook
 import threading
+import copy
 
 
 class KeyListen:
@@ -32,25 +33,33 @@ class KeyListen:
                 if self.debug:
                         print('正处于"{0}"窗口'.format(window_name))
 
-                new_key = False
+                new_key = True
                 if response:
                         if event.Key not in self.press_key:
                                 self.press_key.append(event.Key)
-                                new_key = True
                                 if self.debug:
                                         print('刚刚按下了"{0}"键'.format(self.press_key))
+                        else:
+                                new_key = False
                         mapping = self.press_mapping
-                        hold_key_str = str(self.press_key)
+                        hold_key_lst = self.press_key
                 else:
                         mapping = self.release_mapping
-                        hold_key_str = str(self.press_key)
+                        hold_key_lst = copy.deepcopy(self.press_key)
                         if event.Key in self.press_key:
-                                self.press_key.remove(event.Key)
                                 if self.debug:
                                         print('刚刚抬起了"{0}"键, {1}'.format(
                                                 event.Key, self.press_key))
+                                self.press_key.remove(event.Key)
 
                 _target = ''
+                hold_key_str = str(hold_key_lst)
+                try:
+                        hold_key_str_l = str(hold_key_lst[-1:])
+                except IndexError:
+                        hold_key_str_l = ''
+                print(hold_key_str)
+                print(mapping)
                 if hold_key_str in mapping:
                         _target = hold_key_str
                 elif '#' + hold_key_str in mapping:
@@ -58,6 +67,8 @@ class KeyListen:
                                 _target = '#' + hold_key_str
                         else:
                                 return False
+                elif '*' + hold_key_str_l in mapping:
+                        _target = '*' + hold_key_str_l
 
                 if _target:
                         t = threading.Thread(target=mapping[_target],

@@ -12,14 +12,15 @@ class KeyHolder(threading.Thread):
                 super().__init__()
                 self.hold_lock = keyLocker.KeyLocker()
 
-        def press(self, key: str):
+        def press(self, key: str, extra=0):
                 self.hold_lock.lock()
-                win32api.keybd_event(vkcode.VK_CODE[key], 0, 0, 0)
+                win32api.keybd_event(vkcode.VK_CODE[key], extra, 0, 0)
                 self.hold_lock.unlock()
                 return
 
-        def release(self, key: str):
+        def release(self, key: str, extra=0):
                 self.hold_lock.lock()
-                win32api.keybd_event(vkcode.VK_CODE[key], 0, win32con.KEYEVENTF_KEYUP, 0)
+                win32api.keybd_event(vkcode.VK_CODE[key], extra,
+                                     win32con.KEYEVENTF_KEYUP, 0)
                 self.hold_lock.unlock()
                 return

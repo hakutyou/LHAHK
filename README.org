@@ -5,3 +5,7 @@
 #+BEGIN_SRC bash
 pip install PyHook3
 #+END_SRC
+
+** Package
+- PyHook3 1.6.1
+- pywin32 224

@@ -2,13 +2,13 @@ import pythoncom
 import keyListen.keyListen as keyListen
 import keyFeedback.keyFeedback as keyFeedback
 
-debug = False
+debug = True
 
 
 if __name__ == '__main__':
-        key_feedback = keyFeedback.KeyFeedback(debug=debug)
+        key_holder = keyFeedback.init()
         listen = keyListen.KeyListen(keyFeedback.PRESS_MAPPING,
                                      keyFeedback.RELEASE_MAPPING,
-                                     keyFeedback.key_holder.hold_lock,
+                                     key_holder.hold_lock,
                                      debug=debug)
         pythoncom.PumpMessages()
