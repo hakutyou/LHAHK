@@ -2,7 +2,7 @@ import pythoncom
 import keyListen.keyListen as keyListen
 import keyFeedback.keyFeedback as keyFeedback
 
-debug = True
+debug = False
 
 
 if __name__ == '__main__':

@@ -34,6 +34,7 @@ class KeyListen:
                         print('正处于"{0}"窗口'.format(window_name))
 
                 new_key = True
+                hold_key_str_l = event.Key
                 if response:
                         if event.Key not in self.press_key:
                                 self.press_key.append(event.Key)
@@ -54,20 +55,14 @@ class KeyListen:
 
                 _target = ''
                 hold_key_str = str(hold_key_lst)
-                try:
-                        hold_key_str_l = str(hold_key_lst[-1:])
-                except IndexError:
-                        hold_key_str_l = ''
-                print(hold_key_str)
-                print(mapping)
-                if hold_key_str in mapping:
+                if hold_key_str in mapping:            # normal mapping
                         _target = hold_key_str
-                elif '#' + hold_key_str in mapping:
+                elif '#' + hold_key_str in mapping:    # just response once
                         if new_key:
                                 _target = '#' + hold_key_str
                         else:
                                 return False
-                elif '*' + hold_key_str_l in mapping:
+                elif '*' + hold_key_str_l in mapping:  # must be at last
                         _target = '*' + hold_key_str_l
 
                 if _target:
