@@ -1,7 +1,7 @@
 __all__ = ['numpadMapping']
 
-from ..base import key
 from ..base import mapping
+from .. import simulation
 
 from . import base
 from . import normal
@@ -18,25 +18,25 @@ class _NumpadMapping(base.BaseMapping):
 
         def press(self):
                 return dict({
-                        '*Q': lambda _: key.hold('numpad_7'),
-                        '*W': lambda _: key.hold('numpad_8'),
-                        '*E': lambda _: key.hold('numpad_9'),
-                        '*A': lambda _: key.hold('numpad_4'),
-                        '*S': lambda _: key.hold('numpad_5'),
-                        '*D': lambda _: key.hold('numpad_6'),
-                        '*Z': lambda _: key.hold('numpad_1'),
-                        '*X': lambda _: key.hold('numpad_2'),
-                        '*C': lambda _: key.hold('numpad_3'),
+                        '*Q': lambda _: simulation.press('numpad_7'),
+                        '*W': lambda _: simulation.press('numpad_8'),
+                        '*E': lambda _: simulation.press('numpad_9'),
+                        '*A': lambda _: simulation.press('numpad_4'),
+                        '*S': lambda _: simulation.press('numpad_5'),
+                        '*D': lambda _: simulation.press('numpad_6'),
+                        '*Z': lambda _: simulation.press('numpad_1'),
+                        '*X': lambda _: simulation.press('numpad_2'),
+                        '*C': lambda _: simulation.press('numpad_3'),
 
-                        '*7': lambda _: key.hold('numpad_7'),
-                        '*8': lambda _: key.hold('numpad_8'),
-                        '*9': lambda _: key.hold('numpad_9'),
-                        '*4': lambda _: key.hold('numpad_4'),
-                        '*5': lambda _: key.hold('numpad_5'),
-                        '*6': lambda _: key.hold('numpad_6'),
-                        '*1': lambda _: key.hold('numpad_1'),
-                        '*2': lambda _: key.hold('numpad_2'),
-                        '*3': lambda _: key.hold('numpad_3'),
+                        '*7': lambda _: simulation.press('numpad_7'),
+                        '*8': lambda _: simulation.press('numpad_8'),
+                        '*9': lambda _: simulation.press('numpad_9'),
+                        '*4': lambda _: simulation.press('numpad_4'),
+                        '*5': lambda _: simulation.press('numpad_5'),
+                        '*6': lambda _: simulation.press('numpad_6'),
+                        '*1': lambda _: simulation.press('numpad_1'),
+                        '*2': lambda _: simulation.press('numpad_2'),
+                        '*3': lambda _: simulation.press('numpad_3'),
 
                         "#['Rshift', 'A']": lambda _: mapping.mode_switch(
                                 normal.normalMapping),
@@ -44,25 +44,25 @@ class _NumpadMapping(base.BaseMapping):
 
         def release(self):
                 return {
-                        '*Q': lambda _: key.release('numpad_7'),
-                        '*W': lambda _: key.release('numpad_8'),
-                        '*E': lambda _: key.release('numpad_9'),
-                        '*A': lambda _: key.release('numpad_4'),
-                        '*S': lambda _: key.release('numpad_5'),
-                        '*D': lambda _: key.release('numpad_6'),
-                        '*Z': lambda _: key.release('numpad_1'),
-                        '*X': lambda _: key.release('numpad_2'),
-                        '*C': lambda _: key.release('numpad_3'),
+                        '*Q': lambda _: simulation.release('numpad_7'),
+                        '*W': lambda _: simulation.release('numpad_8'),
+                        '*E': lambda _: simulation.release('numpad_9'),
+                        '*A': lambda _: simulation.release('numpad_4'),
+                        '*S': lambda _: simulation.release('numpad_5'),
+                        '*D': lambda _: simulation.release('numpad_6'),
+                        '*Z': lambda _: simulation.release('numpad_1'),
+                        '*X': lambda _: simulation.release('numpad_2'),
+                        '*C': lambda _: simulation.release('numpad_3'),
 
-                        "*7": lambda _: key.release('numpad_7'),
-                        "*8": lambda _: key.release('numpad_8'),
-                        "*9": lambda _: key.release('numpad_9'),
-                        "*4": lambda _: key.release('numpad_4'),
-                        "*5": lambda _: key.release('numpad_5'),
-                        "*6": lambda _: key.release('numpad_6'),
-                        "*1": lambda _: key.release('numpad_1'),
-                        "*2": lambda _: key.release('numpad_2'),
-                        "*3": lambda _: key.release('numpad_3'),
+                        "*7": lambda _: simulation.release('numpad_7'),
+                        "*8": lambda _: simulation.release('numpad_8'),
+                        "*9": lambda _: simulation.release('numpad_9'),
+                        "*4": lambda _: simulation.release('numpad_4'),
+                        "*5": lambda _: simulation.release('numpad_5'),
+                        "*6": lambda _: simulation.release('numpad_6'),
+                        "*1": lambda _: simulation.release('numpad_1'),
+                        "*2": lambda _: simulation.release('numpad_2'),
+                        "*3": lambda _: simulation.release('numpad_3'),
                 }
 
 

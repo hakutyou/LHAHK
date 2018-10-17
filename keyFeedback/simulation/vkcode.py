@@ -1,3 +1,12 @@
+__all__ = ['VK_CODE', 'scan_code']
+
+import win32api
+
+
+def scan_code(vk_code):
+    return win32api.MapVirtualKey(vk_code, 0)
+
+
 VK_CODE = {
     'backspace': 0x08,
     'tab': 0x09,

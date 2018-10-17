@@ -23,7 +23,7 @@ class KeyListen:
                 hm.HookKeyboard()
 
         def on_key_response(self, event, response):
-                if self.locker.is_lock():
+                if self.locker().is_lock():
                         return True
                 # if response and event.Key in self.hold_key:
                 #         return self.prev_state

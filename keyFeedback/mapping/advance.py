@@ -1,7 +1,7 @@
 __all__ = ['advanceMapping']
 
-from ..base import key
 from ..base import mapping
+from .. import simulation
 
 from . import base
 from . import normal
@@ -20,12 +20,12 @@ class _AdvanceMapping(base.BaseMapping):
                 return dict({
                         "#['A']": self._reverse_window_title,
                         "#['S']": lambda _: mapping.mode_switch(normal.normalMapping),
-                        "#['D']": lambda _: key.hold('left_win'),
+                        "#['D']": lambda _: simulation.press('left_win'),
                 }, **super().press())
 
         def release(self):
                 return {
-                        "['D']": lambda _: key.release('left_win'),
+                        "['D']": lambda _: simulation.release('left_win'),
                 }
 
         def _reverse_window_title(self, window_name: str):

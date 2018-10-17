@@ -1,7 +1,6 @@
 __all__ = ['PRESS_MAPPING', 'RELEASE_MAPPING', 'init']
 
-import copy
-from . import keyHolder
+from . import simulation
 from .base import mapping
 from .mapping import normal
 
@@ -13,7 +12,7 @@ _key_holder = None
 
 def init():
         global _key_holder, PRESS_MAPPING, RELEASE_MAPPING
-        _key_holder = keyHolder.KeyHolder()
+        _key_holder = simulation  # globalKeyboard.globalKeyboard
         mapping.init(_key_holder)
         PRESS_MAPPING = mapping.PRESS_MAPPING
         RELEASE_MAPPING = mapping.RELEASE_MAPPING
