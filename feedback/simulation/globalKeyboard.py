@@ -9,7 +9,6 @@ from . import keyLocker
 
 class _GlobalKeyboard:
         def __init__(self):
-                super().__init__()
                 self.hold_lock = keyLocker.KeyLocker()
 
         def key_once(self, key: str, state: bool):  # state = True 表示按下

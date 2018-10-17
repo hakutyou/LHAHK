@@ -24,9 +24,9 @@ class _AdvanceMapping(base.BaseMapping):
                 }, **super().press())
 
         def release(self):
-                return {
+                return dict({
                         "['D']": lambda _: simulation.release('left_win'),
-                }
+                }, **super().press())
 
         def _reverse_window_title(self, window_name: str):
                 """

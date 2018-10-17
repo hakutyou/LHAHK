@@ -6,6 +6,7 @@ from .. import simulation
 from . import base
 from . import numpad
 from . import advance
+from . import wuxia
 
 
 class _NormalMapping(base.BaseMapping):
@@ -23,14 +24,17 @@ class _NormalMapping(base.BaseMapping):
                         "#['S']": lambda _: mapping.mode_switch(advance.advanceMapping),
                         "#['D']": lambda _: simulation.press('left_win'),
                         "#['F']": self.cmd_input,
+                        "#['G']": lambda _: simulation.click('right'),
                         "#['Rshift', 'A']": lambda _: mapping.mode_switch(
                                 numpad.numpadMapping),
+                        "#['Rshift', 'F10']": lambda _: mapping.mode_switch(
+                                wuxia.wuxiaMapping),
                 }, **super().press())
 
         def release(self):
-                return {
+                return dict({
                         "['D']": lambda _: simulation.release('left_win'),
-                }
+                }, **super().press())
 
         def _print_window_title(self, window_name: str):
                 """

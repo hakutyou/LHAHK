@@ -1,6 +1,6 @@
 import pythoncom
-import keyListen.keyListen as keyListen
-import keyFeedback.keyFeedback as keyFeedback
+import listen.keyListen as keyListen
+import feedback.keyFeedback as keyFeedback
 
 debug = False
 

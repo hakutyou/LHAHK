@@ -43,7 +43,7 @@ class _NumpadMapping(base.BaseMapping):
                 }, **super().press())
 
         def release(self):
-                return {
+                return dict({
                         '*Q': lambda _: simulation.release('numpad_7'),
                         '*W': lambda _: simulation.release('numpad_8'),
                         '*E': lambda _: simulation.release('numpad_9'),
@@ -63,7 +63,7 @@ class _NumpadMapping(base.BaseMapping):
                         "*1": lambda _: simulation.release('numpad_1'),
                         "*2": lambda _: simulation.release('numpad_2'),
                         "*3": lambda _: simulation.release('numpad_3'),
-                }
+                }, **super().press())
 
 
 numpadMapping = _NumpadMapping()

@@ -9,3 +9,9 @@ pip install PyHook3
 ** Package
 - PyHook3 1.6.1
 - pywin32 224
+
+* _pyinstall.bat
+需要安装 pyinstall, 编译为 exe 文件
+
+* run_as_admin.reg
+修改 python.exe 路径后运行, 增加 .py 文件右键管理员运行选项
