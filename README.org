@@ -1,4 +1,9 @@
 * LHAHK
+[[https://github.com/hakutyou/LHAHK/blob/master/LICENSE][https://img.shields.io/badge/license-MIT-blue.svg]]
+[[https://github.com/hakutyou/LHAHK][https://img.shields.io/github/release/hakutyou/LHAHK.svg]]
+
+Windows 平台下鼠标键盘监听模拟的 Python3 实现
+
 ** pyHook for python3
 [[http://www.swig.org/download.html]] 下载 swig.zip 后
 将解压的文件夹添加到环境变量
