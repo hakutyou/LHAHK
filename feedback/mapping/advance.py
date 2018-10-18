@@ -1,11 +1,10 @@
 __all__ = ['advanceMapping']
 
-from ..base import mapping
 from .. import simulation
 from .. import mouseListen
 
+from . import general_lib
 from . import base
-from . import normal
 
 
 class _AdvanceMapping(base.BaseMapping):
@@ -20,7 +19,7 @@ class _AdvanceMapping(base.BaseMapping):
         def press(self):
                 return dict({
                         "#['A']": self._reverse_window_title,
-                        "#['S']": lambda _: mapping.mode_switch(normal.normalMapping),
+                        "#['S']": general_lib.switch_normal,
                         "#['D']": lambda _: simulation.press('left_win'),
                         "#['F']": self.cmd_input,
                         "#['G']": lambda _: self.mouse_right(True),
@@ -32,14 +31,13 @@ class _AdvanceMapping(base.BaseMapping):
                 return dict({
                         "['D']": lambda _: simulation.release('left_win'),
                         "['G']": lambda _: self.mouse_right(False),
-                }, **super().press())
+                }, **super().release())
 
-        def _reverse_window_title(self, window_name: str):
+        @staticmethod
+        def _reverse_window_title(window_name: str):
                 """
                 反向打印激活窗口标题
                 """
-                if self._action_head(self._reverse_window_title):
-                        return
                 print(window_name[::-1])
 
         @staticmethod

@@ -1,10 +1,9 @@
 __all__ = ['numpadMapping']
 
-from ..base import mapping
 from .. import simulation
 
+from . import general_lib
 from . import base
-from . import normal
 
 
 class _NumpadMapping(base.BaseMapping):
@@ -38,8 +37,7 @@ class _NumpadMapping(base.BaseMapping):
                         '*2': lambda _: simulation.press('numpad_2'),
                         '*3': lambda _: simulation.press('numpad_3'),
 
-                        "#['Rshift', 'A']": lambda _: mapping.mode_switch(
-                                normal.normalMapping),
+                        "#['Rshift', 'A']": general_lib.switch_normal,
                 }, **super().press())
 
         def release(self):
@@ -63,7 +61,7 @@ class _NumpadMapping(base.BaseMapping):
                         "*1": lambda _: simulation.release('numpad_1'),
                         "*2": lambda _: simulation.release('numpad_2'),
                         "*3": lambda _: simulation.release('numpad_3'),
-                }, **super().press())
+                }, **super().release())
 
 
 numpadMapping = _NumpadMapping()

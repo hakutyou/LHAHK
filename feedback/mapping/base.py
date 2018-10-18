@@ -11,26 +11,14 @@ class BaseMapping:
 
         def press(self):
                 return {
-                        "#['Rshift', 'S']": lambda _: self.__get_mode(),
-                        "#['Rshift', 'H']": lambda _: self.__get_help(),
-                        "#['Rshift', 'F1']": lambda _: self.__detail_help(),
+                        "#['Rshift', 'S']": self.__get_mode,
                 }
 
         def release(self):
                 return {}
 
-        def __detail_help(self):
-                self.HELP = True
-
-        def __get_mode(self):
+        def __get_mode(self, _):
+                """
+                打印当前模式
+                """
                 print(self.MODE)
-
-        def __get_help(self):
-                print(self.__doc__)
-
-        def _action_head(self, caller):
-                if self.HELP:
-                        print(caller.__doc__)
-                        self.HELP = False
-                        return True
-                return False

@@ -8,6 +8,7 @@ pip install PyHook3
 
 ** Package
 - PyHook3 1.6.1
+- PyQt5 5.11.3
 - pywin32 224
 
 * _pyinstall.bat

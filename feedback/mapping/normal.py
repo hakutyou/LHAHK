@@ -1,7 +1,6 @@
 __all__ = ['normalMapping']
 
 from ..base import mapping
-from .. import simulation
 
 from . import base
 from . import numpad
@@ -21,26 +20,42 @@ class _NormalMapping(base.BaseMapping):
         def press(self):
                 return dict({
                         "#['A']": self._print_window_title,
-                        "#['S']": lambda _: mapping.mode_switch(advance.advanceMapping),
-                        "#['D']": lambda _: simulation.press('left_win'),
-                        "#['Rshift', 'A']": lambda _: mapping.mode_switch(
-                                numpad.numpadMapping),
-                        "#['Rshift', 'F10']": lambda _: mapping.mode_switch(
-                                wuxia.wuxiaMapping),
+                        "#['S']": self._switch_advance,
+                        "#['Rshift', 'A']": self._switch_numpad,
+                        "#['Rshift', 'F10']": self._switch_wuxia,
                 }, **super().press())
 
         def release(self):
                 return dict({
-                        "['D']": lambda _: simulation.release('left_win'),
-                }, **super().press())
+                }, **super().release())
 
-        def _print_window_title(self, window_name: str):
+        @staticmethod
+        def _print_window_title(window_name: str):
                 """
                 打印激活窗口标题
                 """
-                if self._action_head(self._print_window_title):
-                        return
                 print(window_name)
+
+        @staticmethod
+        def _switch_advance(_):
+                """
+                切换到 advance 模式
+                """
+                mapping.mode_switch(advance.advanceMapping)
+
+        @staticmethod
+        def _switch_numpad(_):
+                """
+                切换到 numpad 模式
+                """
+                mapping.mode_switch(numpad.numpadMapping)
+
+        @staticmethod
+        def _switch_wuxia(_):
+                """
+                切换到 wuxia 模式
+                """
+                mapping.mode_switch(wuxia.wuxiaMapping)
 
 
 normalMapping = _NormalMapping()

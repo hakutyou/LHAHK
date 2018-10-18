@@ -1,10 +1,7 @@
 __all__ = ['wuxiaMapping']
 
-from ..base import mapping
-from .. import simulation
-
+from . import general_lib
 from . import base
-from . import normal
 
 
 class _WuxiaMapping(base.BaseMapping):
@@ -14,12 +11,11 @@ class _WuxiaMapping(base.BaseMapping):
 
         def press(self):
                 return dict({
-                        "#['Rshift', 'F10']": lambda _: mapping.mode_switch(
-                                normal.normalMapping),
+                        "#['Rshift', 'F10']": general_lib.switch_normal,
                 }, **super().press())
 
         def release(self):
-                return dict({}, **super().press())
+                return dict({}, **super().release())
 
 
 wuxiaMapping = _WuxiaMapping()
