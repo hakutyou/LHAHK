@@ -7,29 +7,23 @@ import win32con
 class _GlobalMouse:
         def __init__(self):
                 self.__OPERATE_MAPPING = {
-                        'left': (win32con.MOUSEEVENTF_LEFTDOWN,
-                                 win32con.MOUSEEVENTF_LEFTUP),
-                        'middle': (win32con.MOUSEEVENTF_MIDDLEDOWN,
-                                   win32con.MOUSEEVENTF_MIDDLEUP),
-                        'right': (win32con.MOUSEEVENTF_RIGHTDOWN,
-                                  win32con.MOUSEEVENTF_RIGHTUP),
+                        'left': (win32con.MOUSEEVENTF_LEFTUP,          # 0, False
+                                 win32con.MOUSEEVENTF_LEFTDOWN),       # 1, True
+                        'middle': (win32con.MOUSEEVENTF_MIDDLEUP,      # 0, False
+                                   win32con.MOUSEEVENTF_MIDDLEDOWN),   # 1, True
+                        'right': (win32con.MOUSEEVENTF_RIGHTUP,        # 0, False
+                                  win32con.MOUSEEVENTF_RIGHTDOWN),     # 1, True
                 }
 
         @staticmethod
         def move(x, y):
                 win32api.SetCursorPos((x, y))
 
-        def key_once(self, key: str, state: bool):  # state = True 表示按下
-                if state:
-                        try:
-                                operate = self.__OPERATE_MAPPING[key][0]
-                        except KeyError:
-                                operate = self.__OPERATE_MAPPING['left'][0]
-                else:
-                        try:
-                                operate = self.__OPERATE_MAPPING[key][1]
-                        except KeyError:
-                                operate = self.__OPERATE_MAPPING['left'][1]
+        def key_once(self, key, state):  # state = True(1) 表示按下
+                try:
+                        operate = self.__OPERATE_MAPPING[key][state]
+                except TypeError:
+                        operate = self.__OPERATE_MAPPING['left'][state]
                 win32api.mouse_event(operate, 0, 0, 0, 0)
 
 

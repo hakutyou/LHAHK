@@ -23,8 +23,6 @@ class _NormalMapping(base.BaseMapping):
                         "#['A']": self._print_window_title,
                         "#['S']": lambda _: mapping.mode_switch(advance.advanceMapping),
                         "#['D']": lambda _: simulation.press('left_win'),
-                        "#['F']": self.cmd_input,
-                        "#['G']": lambda _: simulation.click('right'),
                         "#['Rshift', 'A']": lambda _: mapping.mode_switch(
                                 numpad.numpadMapping),
                         "#['Rshift', 'F10']": lambda _: mapping.mode_switch(
@@ -43,14 +41,6 @@ class _NormalMapping(base.BaseMapping):
                 if self._action_head(self._print_window_title):
                         return
                 print(window_name)
-
-        @staticmethod
-        def cmd_input(_):
-                import win32gui
-                hwnd = win32gui.FindWindow(0, 'G:\Windows\system32\cmd.exe')
-                simulation.input_string('ls', hwnd)
-                simulation.random_wait()
-                simulation.input_key('enter', hwnd)
 
 
 normalMapping = _NormalMapping()

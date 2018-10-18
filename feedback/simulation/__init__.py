@@ -1,6 +1,6 @@
 __all__ = ['input_key', 'input_string', 'press', 'release', 'random_wait',
            'hold_lock',
-           'move', 'mouse_down', 'mouse_up', 'click']
+           'mouse_down', 'mouse_up', 'click', 'double_click']
 
 import random
 import time
@@ -8,6 +8,8 @@ import time
 from . import globalKeyboard
 from . import handleKeyboard
 from . import globalMouse
+from . import handleMouse
+from . import mouseLocker
 
 
 def press(key, hwnd=None):
@@ -26,27 +28,28 @@ def release(key, hwnd=None):
         return
 
 
-def move(x, y, hwnd=None):
+def mouse_down(key, x, y, hwnd=None):
         if hwnd is None:
                 globalMouse.globalMouse.move(x, y)
-        else:
-                pass
-        return
-
-
-def mouse_down(key, hwnd=None):
-        if hwnd is None:
+                mouseLocker.mouseLocker.lock()
+                random_wait()
+                mouseLocker.mouseLocker.unlock()
                 globalMouse.globalMouse.key_once(key, True)
         else:
-                pass
+                handleMouse.handleMouse.move_key_once(key, True, x, y, hwnd)
+
         return
 
 
-def mouse_up(key, hwnd=None):
+def mouse_up(key, x, y, hwnd=None):
         if hwnd is None:
+                globalMouse.globalMouse.move(x, y)
+                mouseLocker.mouseLocker.lock()
+                random_wait()
+                mouseLocker.mouseLocker.unlock()
                 globalMouse.globalMouse.key_once(key, False)
         else:
-                pass
+                handleMouse.handleMouse.move_key_once(key, False, x, y, hwnd)
         return
 
 
@@ -70,14 +73,29 @@ def input_string(string, hwnd=None):
         return
 
 
-def click(key, hwnd=None):
-        mouse_down(key, hwnd)
+def click(key, x, y, hwnd=None):
+        mouse_down(key, x, y, hwnd)
+        mouseLocker.mouseLocker.lock()
         random_wait()
-        mouse_up(key, hwnd)
+        mouseLocker.mouseLocker.unlock()
+        mouse_up(key, x, y, hwnd)
         return
 
 
-def random_wait(interval=0.1, deviation=0.05):
+def double_click(key, x, y, hwnd=None):
+        if hwnd is None:
+                click(key, x, y)
+                mouseLocker.mouseLocker.lock()
+                random_wait()
+                mouseLocker.mouseLocker.unlock()
+                click(key, x, y)
+        else:
+                __double_click = 2
+                handleMouse.handleMouse.move_key_once(
+                        key, __double_click, x, y, hwnd)
+
+
+def random_wait(interval=0.05, deviation=0.025):
         time.sleep(2 * random.random() * deviation - deviation + interval)
 
 
