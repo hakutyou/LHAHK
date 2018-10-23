@@ -3,5 +3,6 @@
 /build/
 /dist/
 /main.spec
+/*.zip
 *.pyc
 *.qmlc

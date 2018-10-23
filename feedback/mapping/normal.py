@@ -19,8 +19,7 @@ class _NormalMapping(base.BaseMapping):
 
         def press(self):
                 return dict({
-                        "#['A']": self._print_window_title,
-                        "#['S']": self._switch_advance,
+                        # "#['S']": self._switch_advance,
                         "#['Rshift', 'A']": self._switch_numpad,
                         "#['Rshift', 'F10']": self._switch_wuxia,
                 }, **super().press())

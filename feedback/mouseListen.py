@@ -8,8 +8,11 @@ class _MouseListen:
                 pass
 
         @staticmethod
-        def mouse_position():
-                return win32gui.GetCursorPos()
+        def mouse_position(hwnd=None):
+                x, y = win32gui.GetCursorPos()
+                if hwnd is None:
+                        return x, y
+                return win32gui.ScreenToClient(hwnd, (x, y))
 
         @staticmethod
         def window_position(hwnd=None):  # x_top, y_top, x_bottom, y_bottom

@@ -1,14 +1,14 @@
 import sys
 import PyQt5.QtWidgets
 import PyQt5.QtQml
-import PyQt5.QtCore
+import PyQt5.QtGui
 
 import listen.keyListen as keyListen
 import feedback.keyFeedback as keyFeedback
 import interactive.interactive as interactive
 import feedback.refresh as refresh
 
-debug = False
+debug = True
 
 
 def simulator():
@@ -22,6 +22,7 @@ def simulator():
 
 if __name__ == '__main__':
         app = PyQt5.QtWidgets.QApplication(sys.argv)
+        app.setWindowIcon(PyQt5.QtGui.QIcon('main.ico'))
         engine = PyQt5.QtQml.QQmlApplicationEngine()
         context = engine.rootContext()
         con = interactive.Interactive(simulator())

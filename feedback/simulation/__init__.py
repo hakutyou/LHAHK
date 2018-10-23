@@ -73,11 +73,13 @@ def input_string(string, hwnd=None):
         return
 
 
-def click(key, x, y, hwnd=None):
+def click(key, x, y, hwnd=None, wait=0.05):
         mouse_down(key, x, y, hwnd)
-        mouseLocker.mouseLocker.lock()
-        random_wait()
-        mouseLocker.mouseLocker.unlock()
+        if hwnd is None:
+                mouseLocker.mouseLocker.lock()
+        random_wait(wait)
+        if hwnd is None:
+                mouseLocker.mouseLocker.unlock()
         mouse_up(key, x, y, hwnd)
         return
 

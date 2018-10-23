@@ -22,7 +22,8 @@ def mode_switch(mode: base.BaseMapping):
 def mapping_switch(_press_mapping=None, _release_mapping=None):
         global PRESS_MAPPING, RELEASE_MAPPING
         _key_holder.hold_lock().lock()
-        simulation.release('right_shift')
+        simulation.release('Rshift')
+        simulation.release('Escape')
         if _press_mapping is not None:
                 PRESS_MAPPING.clear()
                 for i in _press_mapping:
