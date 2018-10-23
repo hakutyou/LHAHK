@@ -7,18 +7,9 @@ class BaseMapping:
         """
         def __init__(self):
                 self.MODE = 'base'
-                self.HELP = False
 
         def press(self):
-                return {
-                        "#['Rshift', 'S']": self.__get_mode,
-                }
+                return {}
 
         def release(self):
                 return {}
-
-        def __get_mode(self, _):
-                """
-                打印当前模式
-                """
-                print(self.MODE)

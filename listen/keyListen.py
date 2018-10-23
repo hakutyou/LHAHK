@@ -8,11 +8,12 @@ import copy
 
 
 class KeyListen:
-        def __init__(self, press_mapping, release_mapping, locker, debug=False):
+        def __init__(self, mode, press_mapping, release_mapping, locker, debug=False):
                 self.debug = debug
                 self._new_key = 0
 
                 self.press_key = []
+                self.mode = mode
                 self.press_mapping = press_mapping
                 self.release_mapping = release_mapping
                 self.locker = locker

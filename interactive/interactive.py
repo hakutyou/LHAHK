@@ -19,3 +19,7 @@ class Interactive(PyQt5.QtCore.QObject):
         @PyQt5.QtCore.pyqtSlot(str)
         def output(self, string):
                 print(string)
+
+        @PyQt5.QtCore.pyqtSlot(result=str)
+        def get_mode(self):
+                return self.simulator.mode[0]
