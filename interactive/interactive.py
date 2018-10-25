@@ -2,18 +2,19 @@ __all__ = ['Interactive']
 
 import PyQt5.QtCore
 
+from simulator.mapping import mapping
+
 
 class Interactive(PyQt5.QtCore.QObject):
-        def __init__(self, simulator, parent=None):
+        def __init__(self, parent=None):
                 super(Interactive, self).__init__(parent)
-                self.simulator = simulator
 
         @PyQt5.QtCore.pyqtSlot(result=list)
         def get_key_list(self):
-                mapping = self.simulator.press_mapping
-                return list(map(lambda x: {'role_id': mapping[x].__doc__,
+                mapper = mapping.press_mapping
+                return list(map(lambda x: {'role_id': mapper[x].__doc__,
                                            'role_name': x},
-                                mapping))
+                                mapper))
                 # return [{'role_name': '读取失败'}]
 
         @PyQt5.QtCore.pyqtSlot(str)
@@ -22,4 +23,4 @@ class Interactive(PyQt5.QtCore.QObject):
 
         @PyQt5.QtCore.pyqtSlot(result=str)
         def get_mode(self):
-                return self.simulator.mode[0]
+                return mapping.mode()

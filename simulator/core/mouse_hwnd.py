@@ -1,11 +1,12 @@
-__all__ = ['handleMouse']
-
 import win32api
 import win32con
 
+from . import mouse
 
-class _HandleMouse:
+
+class MouseHwnd(mouse.Mouse):
         def __init__(self):
+                super().__init__()
                 self.__OPERATE_MAPPING = {
                         'left': (win32con.WM_LBUTTONUP,         # 0, False
                                  win32con.WM_LBUTTONDOWN,       # 1, True
@@ -23,7 +24,9 @@ class _HandleMouse:
                         'right': win32con.MK_RBUTTON,
                 }
 
-        def move_key_once(self, key: str, state: bool, x, y, hwnd):
+        def move_key_once(self, key: str, state: bool, x, y, hwnd=None, lock=False):
+                if hwnd is None:
+                        return False
                 long_position = win32api.MAKELONG(x, y)
                 try:
                         operate = self.__OPERATE_MAPPING[key][state]
@@ -32,6 +35,3 @@ class _HandleMouse:
                         operate = self.__OPERATE_MAPPING['left'][state]
                         button = self.__BUTTON_MAPPING['left']
                 win32api.SendMessage(hwnd, operate, button, long_position)
-
-
-handleMouse = _HandleMouse()

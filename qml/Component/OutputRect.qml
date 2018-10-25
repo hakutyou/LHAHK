@@ -46,11 +46,4 @@ Rectangle {
         delegate: resultComponent
         focus: true
     }
-    ListModel {
-            id: resultList
-    }
-    function output_get() {
-        resultList.clear()
-        resultList.append(con.get_key_list())
-    }
 }

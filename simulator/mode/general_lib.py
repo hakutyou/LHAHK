@@ -1,4 +1,6 @@
-from ..base import mapping
+__all__ = ['switch_normal']
+
+from ..mapping import mapping
 
 from . import normal
 

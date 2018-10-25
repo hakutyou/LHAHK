@@ -1,10 +1,9 @@
 __all__ = ['normalMapping']
 
-from ..base import mapping
+from ..mapping import mapping
 
 from . import base
 from . import numpad
-from . import advance
 from . import wuxia
 
 
@@ -19,7 +18,6 @@ class _NormalMapping(base.BaseMapping):
 
         def press(self):
                 return dict({
-                        # "#['S']": self._switch_advance,
                         "#['Rshift', 'A']": self._switch_numpad,
                         "#['Rshift', 'F10']": self._switch_wuxia,
                 }, **super().press())
@@ -34,13 +32,6 @@ class _NormalMapping(base.BaseMapping):
                 打印激活窗口标题
                 """
                 print(window_name)
-
-        @staticmethod
-        def _switch_advance(_):
-                """
-                切换到 advance 模式
-                """
-                mapping.mode_switch(advance.advanceMapping)
 
         @staticmethod
         def _switch_numpad(_):

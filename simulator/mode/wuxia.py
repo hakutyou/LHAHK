@@ -1,7 +1,7 @@
 __all__ = ['wuxiaMapping']
 
 import threading
-from .. import simulation
+from .. import core
 from .. import mouseListen
 
 from . import general_lib
@@ -67,19 +67,19 @@ class _WuxiaMapping(base.BaseMapping):
 
         def _clear_auction(self, which=1):
                 while self.rush_flags:
-                        simulation.click('left', 406 - 1, 223 - 26, self.hwnd, wait=.2)
+                        core.mouseHwnd.click('left', 406 - 1, 223 - 26, self.hwnd, wait=.2)
                         # 不计算边框坐标
-                        simulation.random_wait()
-                        simulation.click('left', 595 - 1, 286 - 26, self.hwnd, wait=.2)
-                        simulation.random_wait()
-                        simulation.click('left', 995 - 1, 668 - 26, self.hwnd, wait=.2)
-                        simulation.random_wait()
-                        simulation.click('left', 663 - 1, 496 - 26, self.hwnd, wait=.2)
-                        simulation.random_wait()
-                        simulation.click('left', 598 - 1, 445 - 26, self.hwnd, wait=.2)
-                        simulation.random_wait(.5)
-                        simulation.click('left', 701 - 1, 444 - 26, self.hwnd, wait=.2)
-                        simulation.random_wait()
+                        core.wait.random_wait()
+                        core.mouseHwnd.click('left', 595 - 1, 286 - 26, self.hwnd, wait=.2)
+                        core.wait.random_wait()
+                        core.mouseHwnd.click('left', 995 - 1, 668 - 26, self.hwnd, wait=.2)
+                        core.wait.random_wait()
+                        core.mouseHwnd.click('left', 663 - 1, 496 - 26, self.hwnd, wait=.2)
+                        core.wait.random_wait()
+                        core.mouseHwnd.click('left', 598 - 1, 445 - 26, self.hwnd, wait=.2)
+                        core.wait.random_wait(.5)
+                        core.mouseHwnd.click('left', 701 - 1, 444 - 26, self.hwnd, wait=.2)
+                        core.wait.random_wait()
 
         def rush_hosi_4(self, _):
                 """
@@ -105,15 +105,15 @@ class _WuxiaMapping(base.BaseMapping):
 
         def _rush_liuxing(self, hosi=5):
                 while self.rush_flags:
-                        simulation.click('left', 821-1, 206-26, self.hwnd, wait=.2)
-                        simulation.random_wait()
+                        core.mouseHwnd.click('left', 821 - 1, 206 - 26, self.hwnd, wait=.2)
+                        core.wait.random_wait()
                         if hosi == 4:
-                                simulation.click('right', 662-1, 351-26, self.hwnd)
+                                core.mouseHwnd.click('right', 662 - 1, 351 - 26, self.hwnd)
                         if hosi == 5:
-                                simulation.click('right', 471-1, 423-26, self.hwnd)
-                        simulation.random_wait()
-                        simulation.click('left', 972-1, 561-26, self.hwnd)
-                        simulation.random_wait()
+                                core.mouseHwnd.click('right', 471 - 1, 423 - 26, self.hwnd)
+                        core.wait.random_wait()
+                        core.mouseHwnd.click('left', 972 - 1, 561 - 26, self.hwnd)
+                        core.wait.random_wait()
 
         def rush_f(self, _):
                 """
@@ -140,8 +140,8 @@ class _WuxiaMapping(base.BaseMapping):
         def _rush_f(self, keys, wait_time=0.05):
                 while self.rush_flags:
                         for x in keys:
-                                simulation.input_key(x, self.hwnd)
-                                simulation.random_wait(wait_time)
+                                core.keyboardHwnd.input_key(x, self.hwnd)
+                                core.wait.random_wait(wait_time)
 
         def rush_click(self, _):
                 """
@@ -160,8 +160,8 @@ class _WuxiaMapping(base.BaseMapping):
                 else:
                         mouse_x, mouse_y = self.mouse_x, self.mouse_y
                 while self.rush_flags:
-                        simulation.click('left', mouse_x, mouse_y, self.hwnd, wait=.3)
-                        simulation.random_wait()
+                        core.mouseGlob.click('left', mouse_x, mouse_y, self.hwnd, wait=.3)
+                        core.wait.random_wait()
 
 
 wuxiaMapping = _WuxiaMapping()

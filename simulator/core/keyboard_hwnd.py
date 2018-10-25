@@ -1,16 +1,17 @@
-__all__ = ['handleKeyboard']
-
 import win32api
 import win32con
 
+from . import keyboard
 from . import vkcode
 
 
-class _HandleKeyboard:
+class KeyboardHwnd(keyboard.Keyboard):
         def __init__(self):
-                self.__SPECIAL_KEY = ['esc', 'enter']
+                super().__init__()
 
-        def key_once(self, key: str, state: bool, hwnd):  # state = True 表示按下
+        def key_once(self, key: str, state: bool, hwnd=None):  # state = True 表示按下
+                if hwnd is None:
+                        return False
                 virtual_code = vkcode.VK_CODE[key]
                 scan_code = vkcode.scan_code(virtual_code)
                 if state:
@@ -22,6 +23,3 @@ class _HandleKeyboard:
 
                 win32api.PostMessage(hwnd, operate, virtual_code, code)
                 return True
-
-
-handleKeyboard = _HandleKeyboard()

@@ -1,9 +1,9 @@
-__all__ = ['mouseLocker']
+__all__ = ['MouseLocker']
 
 from ctypes import *
 
 
-class _MouseLocker:
+class MouseLocker:
         def __init__(self):
                 pass
 
@@ -14,6 +14,3 @@ class _MouseLocker:
         @staticmethod
         def unlock():
                 windll.user32.BlockInput(False)  # it works as admin
-
-
-mouseLocker = _MouseLocker()

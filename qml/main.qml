@@ -19,7 +19,6 @@ Window {
 
     OutputRect {
         id: resultRect
-        objectName: 'resultRect'
         width: parent.width
         height: parent.height
         LinearGradient {
@@ -36,6 +35,7 @@ Window {
     }
 
     SystemTrayIcon {
+        id: systemTray
         visible: true
         iconSource: '../main.ico'
         tooltip: 'LHAHK'
@@ -63,5 +63,17 @@ Window {
                 showMessage('Mode', con.get_mode())
             }
         }
+    }
+
+    ListModel {
+        id: resultList
+    }
+    function output_get () {
+        resultList.clear()
+        resultList.append(con.get_key_list())
+    }
+
+    function tray_info (title, content) {
+        systemTray.showMessage(title, content)
     }
 }
