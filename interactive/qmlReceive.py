@@ -1,29 +1,26 @@
-__all__ = ['qmlReceive']
+__all__ = ['QmlReceive']
 
 import PyQt5.QtCore
 
-
-class QmlReceive:
-        def __init__(self):
-                self.root_object = None
-
-        def set_root_object(self, root_object):
-                self.root_object = root_object
-
-        def refresh_keylist(self):
-                if self.root_object is None:
-                        print('root object not set!')
-                        return
-                PyQt5.QtCore.QMetaObject.invokeMethod(self.root_object, 'output_get')
-
-        def tray_info(self, title, content):
-                if self.root_object is None:
-                        print('root object not set!')
-                        return
-                PyQt5.QtCore.QMetaObject.invokeMethod(self.root_object, 'tray_info',
-                                                      PyQt5.QtCore.Qt.DirectConnection,
-                                                      PyQt5.QtCore.Q_ARG(PyQt5.QtCore.QVariant, title),
-                                                      PyQt5.QtCore.Q_ARG(PyQt5.QtCore.QVariant, content))
+from simulator.mapping import mapping
 
 
-qmlReceive = QmlReceive()
+class QmlReceive(PyQt5.QtCore.QObject):
+        def __init__(self, parent=None):
+                super(QmlReceive, self).__init__(parent)
+
+        @PyQt5.QtCore.pyqtSlot(result=list)
+        def get_key_list(self):
+                mapper = mapping.press_mapping
+                return list(map(lambda x: {'doc': mapper[x][0],
+                                           'hotkey': x},
+                                mapper))
+                # return [{'role_name': '读取失败'}]
+
+        @PyQt5.QtCore.pyqtSlot(result=str)
+        def get_mode(self):
+                return mapping.mode
+
+        @PyQt5.QtCore.pyqtSlot(str)
+        def output(self, string):
+                print(string)

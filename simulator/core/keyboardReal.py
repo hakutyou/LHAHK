@@ -1,16 +1,18 @@
+__all__ = ['KeyboardReal']
+
 import win32api
 import win32con
 
 from . import vkcode
-from . import keyboard
+from . import keyboardBase
 
 
-class KeyboardGlob(keyboard.Keyboard):
+class KeyboardReal(keyboardBase.KeyboardBase):
         def __init__(self):
                 super().__init__()
                 self._locker = [0]
 
-        def key_once(self, key: str, state: bool, hwnd=None):
+        def key_once(self, key: str, state: bool, hwnd):
                 virtual_code = vkcode.VK_CODE[key]
                 scan_code = vkcode.scan_code(virtual_code)
                 if state:

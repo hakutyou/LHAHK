@@ -1,6 +1,6 @@
 __all__ = ['normalMapping']
 
-from ..mapping import mapping
+from . import general_lib
 
 from . import base
 from . import numpad
@@ -18,34 +18,20 @@ class _NormalMapping(base.BaseMapping):
 
         def press(self):
                 return dict({
-                        "#['Rshift', 'A']": self._switch_numpad,
-                        "#['Rshift', 'F10']": self._switch_wuxia,
+                        "#['Rshift', 'A']": general_lib.switch_mode('numpad', numpad.numpadMapping),
+                        "#['Rshift', 'F10']": general_lib.switch_mode('wuxia', wuxia.wuxiaMapping),
                 }, **super().press())
 
         def release(self):
                 return dict({
                 }, **super().release())
 
-        @staticmethod
-        def _print_window_title(window_name: str):
-                """
-                打印激活窗口标题
-                """
-                print(window_name)
-
-        @staticmethod
-        def _switch_numpad(_):
-                """
-                切换到 numpad 模式
-                """
-                mapping.mode_switch(numpad.numpadMapping)
-
-        @staticmethod
-        def _switch_wuxia(_):
-                """
-                切换到 wuxia 模式
-                """
-                mapping.mode_switch(wuxia.wuxiaMapping)
+        # @staticmethod
+        # def _print_window_title(window_name: str):
+        #         """
+        #         打印激活窗口标题
+        #         """
+        #         print(window_name)
 
 
 normalMapping = _NormalMapping()

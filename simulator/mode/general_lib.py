@@ -1,12 +1,24 @@
-__all__ = ['switch_normal']
+__all__ = ['switch_mode']
 
-from ..mapping import mapping
+import simulator.core
 
-from . import normal
+from simulator.mapping import mapping
 
 
-def switch_normal(_):
-        """
-        切换到 normal 模式
-        """
-        mapping.mode_switch(normal.normalMapping)
+def switch_mode(intro, mode, exit_action=None):
+        return ('切换到 {0} 模式'.format(intro),
+                lambda _: mapping.mode_switch(mode, exit_action))
+
+
+def click(x, y, key='left', hwnd=None, wait=.1):
+        if hwnd is None:
+                simulator.core.mouse.click(key, x, y, hwnd, wait)
+        else:
+                simulator.core.mouseBack.click(key, x, y, hwnd, wait)
+
+
+def input_key(key, hwnd):
+        if hwnd is None:
+                simulator.core.keyboard.input_key(key)
+        else:
+                simulator.core.keyboardBack.input_key(key, hwnd)

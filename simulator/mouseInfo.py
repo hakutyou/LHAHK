@@ -1,9 +1,9 @@
-__all__ = ['mouseListen']
+__all__ = ['mouseInfo']
 
 import win32gui
 
 
-class _MouseListen:
+class MouseInfo:
         def __init__(self):
                 pass
 
@@ -21,4 +21,4 @@ class _MouseListen:
                 return win32gui.GetWindowRect(hwnd)
 
 
-mouseListen = _MouseListen()
+mouseInfo = MouseInfo()

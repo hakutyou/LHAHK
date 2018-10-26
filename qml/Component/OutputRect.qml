@@ -17,7 +17,7 @@ Rectangle {
                     height: parent.height
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignVCenter
-                    text: role_name
+                    text: hotkey
                     font.family: main.font_family
                     font.pixelSize: main.small_font_size
                     clip: true
@@ -29,7 +29,7 @@ Rectangle {
                     height: parent.height
                     horizontalAlignment: Text.AlignRight
                     verticalAlignment: Text.AlignVCenter
-                    text: role_id
+                    text: doc
                     font.family: main.font_family
                     font.pixelSize: main.tiny_font_size
                     font.italic: true

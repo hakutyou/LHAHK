@@ -1,11 +1,13 @@
+__all__ = ['KeyboardHwnd']
+
 import win32api
 import win32con
 
-from . import keyboard
+from . import keyboardBase
 from . import vkcode
 
 
-class KeyboardHwnd(keyboard.Keyboard):
+class KeyboardHwnd(keyboardBase.KeyboardBase):
         def __init__(self):
                 super().__init__()
 
