@@ -6,6 +6,7 @@ from . import general_lib
 from . import base
 from . import numpad
 from . import wuxia
+from . import mouse
 
 
 class _NormalMapping(base.BaseMapping):
@@ -17,14 +18,18 @@ class _NormalMapping(base.BaseMapping):
                 self.MODE = 'normal'
 
         def press(self):
-                return dict({
+                result = {
                         "0002#['A']": general_lib.switch_mode(numpad.numpadMapping),
+                        "0002#['Q']": general_lib.switch_mode(mouse.mouseMapping),
                         "0002#['F10']": general_lib.switch_mode(wuxia.wuxiaMapping),
-                }, **super(__class__, self).press())
+                }
+                result.update(super(__class__, self).press())
+                return result
 
         def release(self):
-                return dict({
-                }, **super(__class__, self).release())
+                result = {}
+                result.update(super(__class__, self).press())
+                return result
 
         # @staticmethod
         # def _print_window_title(window_name: str):
