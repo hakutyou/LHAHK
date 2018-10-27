@@ -17,10 +17,40 @@ pip install PyHook3
 - pywin32 224
 
 * _pyinstall.bat
-需要安装 pyinstall, 编译为 exe 文件
+需要安装 pyinstall，编译为 exe 文件
 
 * run_as_admin.reg
-修改 python.exe 路径后运行, 增加 .py 文件右键管理员运行选项
+修改 python.exe 路径后运行，增加 .py 文件右键管理员运行选项
 
 * simulator/mode
-所有 Hotkey 操作设定, 默认为 normal 模式
+所有 Hotkey 操作设定，默认为 normal 模式
+
+** Hotkey 格式
+*** ~['A']~
+仅当按下 ~A~ 时触发，如果 ~setting.MACS~ 为 ~True~ ，则无视所有功能键（例如 ~Lshift A~ 也会触发）
+
+如果一直保持 ~A~ 为按下状态，会连续触发
+*** ~['LshiftA', 'A']~
+仅当按下 ~Lshift, A~ 时触发，如果 ~setting.MACS~ 为 ~True~ ，则永远不会触发
+
+如果一直保持 ~Lshift, A~ 为按下状态，会连续触发
+*** ~#['A']~
+仅当按下 ~A~ 时触发，如果 ~setting.MACS~ 为 ~True~ ，则无视所有功能键（例如 ~Lshift A~ 也会触发）
+
+即使一直保持 ~A~ 为按下状态，也只会触发一次
+*** ~#['LshiftA', 'A']~
+仅当按下 ~Lshift, A~ 时触发，如果 ~setting.MACS~ 为 ~True~ ，则永远不会触发
+
+即使一直保持 ~Lshift, A~ 为按下状态，也只会触发一次
+*** ~*A~
+只要按下 ~A~ 就会触发
+
+如果一直保持 ~A~ 为按下状态，会连续触发
+*** ~0['A']~
+如果 ~setting.MACS~ 不为 ~True~ ，则永远不会触发，如果 ~setting.MACS~ 为 ~True~ 则仅当按下 ~A~ 并未按下功能键时触发
+
+*** ~2*A~
+如果 ~setting.MACS~ 不为 ~True~ ，则永远不会触发，如果 ~setting.MACS~ 为 ~True~ 则在 ~Lshift~ 按住时，只要按下 ~A~ 就会触发
+
+*** 注意
+在连续输入时，可能会有非功能键同时按下例如 ['S', 'A'] 的情况，此时 ['A'] 会无法触发
