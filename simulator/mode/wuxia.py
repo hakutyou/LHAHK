@@ -11,6 +11,10 @@ from . import normal
 
 
 class _WuxiaMapping(base.BaseMapping):
+        """
+        wuxia: 天刀相关
+        """
+
         def __init__(self):
                 super().__init__()
                 self.MODE = 'wuxia'
@@ -21,15 +25,15 @@ class _WuxiaMapping(base.BaseMapping):
 
         def press(self):
                 result = {
-                        "#['F2']": self.choose_hwnd(),
-                        "#['F3']": self.cancel_hwnd(),
-                        "#['F5']": self.clear_auction(1),
-                        "#['F6']": self.rush_voyage(4),
-                        "#['F7']": self.rush_voyage(5),
-                        "#['F8']": self.rush_key(['W', 'G'], 1),
-                        "#['F9']": self.rush_click(),
-                        "#['F10']": self.rush_stop(),
-                        "#['F11']": self.rush_key(['F']),
+                        '2*F2': self.choose_hwnd(),
+                        '2*F3': self.cancel_hwnd(),
+                        '2*F5': self.clear_auction(1),
+                        '2*F6': self.rush_voyage(4),
+                        '2*F7': self.rush_voyage(5),
+                        '2*F8': self.rush_key(['W', 'G'], 1),
+                        '2*F9': self.rush_click(),
+                        '2*F10': self.rush_stop(),
+                        '2*F11': self.rush_key(['F']),
                 }
                 result.update({'*Escape': general_lib.switch_mode('normal', normal.normalMapping, self.rush_stop()[1])})
                 result.update(super().press())

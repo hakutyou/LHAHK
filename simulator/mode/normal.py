@@ -9,8 +9,7 @@ from . import wuxia
 
 class _NormalMapping(base.BaseMapping):
         """
-        Normal: 普通模式
-        可切换以下模式 [Rshift, A]: Numpad, [S]: Advance
+        normal: 普通模式
         """
         def __init__(self):
                 super().__init__()
@@ -18,8 +17,8 @@ class _NormalMapping(base.BaseMapping):
 
         def press(self):
                 return dict({
-                        "#['Rshift', 'A']": general_lib.switch_mode('numpad', numpad.numpadMapping),
-                        "#['Rshift', 'F10']": general_lib.switch_mode('wuxia', wuxia.wuxiaMapping),
+                        "2#['A']": general_lib.switch_mode('numpad', numpad.numpadMapping),
+                        "2#['F10']": general_lib.switch_mode('wuxia', wuxia.wuxiaMapping),
                 }, **super().press())
 
         def release(self):

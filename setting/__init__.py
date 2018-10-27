@@ -1,5 +1,6 @@
 __all__ = ['DEBUG', 'TRAY']
 
 
-DEBUG = False
+DEBUG = True
 TRAY = True
+MACS = True     # Check Meta Ctrl Shift Win Key

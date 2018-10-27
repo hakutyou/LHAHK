@@ -21,3 +21,6 @@ pip install PyHook3
 
 * run_as_admin.reg
 修改 python.exe 路径后运行, 增加 .py 文件右键管理员运行选项
+
+* simulator/mode
+所有 Hotkey 操作设定, 默认为 normal 模式

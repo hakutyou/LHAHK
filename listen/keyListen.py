@@ -9,11 +9,25 @@ import setting
 
 from simulator.mapping import mapping
 
+LShift = 0x01
+RShift = 0x02
+Shift = 0x03
+LControl = 0x04
+RControl = 0x08
+Control = 0x0c
+LMenu = 0x10
+RMenu = 0x20
+Meta = 0x30
+LWin = 0x40
+RWin = 0x80
+Win = 0xc0
+
 
 class KeyListen:
         def __init__(self):
                 self.__hold_key = 0
                 self.pressed_key = []
+                self.macs = 0x00
 
         def start(self):
                 hm = pyHook.HookManager()
@@ -22,6 +36,26 @@ class KeyListen:
                 hm.KeyDown = on_key_down
                 hm.KeyUp = on_key_up
                 hm.HookKeyboard()
+
+        @staticmethod
+        def macs_record(key):
+                if key == 'Lshift':
+                        return LShift
+                elif key == 'Rshift':
+                        return RShift
+                elif key == 'Lmenu':
+                        return LMenu
+                elif key == 'Rmenu':
+                        return RMenu
+                elif key == 'Lcontrol':
+                        return LControl
+                elif key == 'Rcontrol':
+                        return RControl
+                elif key == 'Lwin':
+                        return LWin
+                elif key == 'Rwin':
+                        return RWin
+                return 0
 
         def on_key_response(self, event, state):
                 if self.is_lock:
@@ -37,6 +71,13 @@ class KeyListen:
                 # new_key = True
                 hold_key_str_l = event.Key
                 if state:               # press
+                        if setting.MACS:
+                                _macs = self.macs_record(event.Key)
+                                if _macs != 0:
+                                        self.macs |= _macs
+                                        if setting.DEBUG:
+                                                print('state = {0}'.format(self.macs))
+                                        return True
                         if event.Key not in self.pressed_key:
                                 self.__hold_key = 0
                                 self.pressed_key.append(event.Key)
@@ -48,6 +89,13 @@ class KeyListen:
                         mapper = mapping.press_mapping
                         hold_key_str = str(self.pressed_key)
                 else:                   # release
+                        if setting.MACS:
+                                _macs = self.macs_record(event.Key)
+                                if _macs != 0:
+                                        self.macs &= ~_macs
+                                        if setting.DEBUG:
+                                                print('state = {0}'.format(self.macs))
+                                        return True
                         self.__hold_key = 0
                         mapper = mapping.release_mapping
                         hold_key_str = str(self.pressed_key)
@@ -59,16 +107,16 @@ class KeyListen:
                                 self.pressed_key.pop(p)
 
                 _target = ''
-                if hold_key_str in mapper:            # normal mode
-                        _target = hold_key_str
-                elif '#' + hold_key_str in mapper:    # just response once
-                        if self.__hold_key == 0:
-                                _target = '#' + hold_key_str
-                # elif '$' + hold_key_str in mode:    # just response when hold on
-                #         if self._new_key == 1:
-                #                 _target = '$' + hold_key_str
-                elif '*' + hold_key_str_l in mapper:  # must be at last
-                        _target = '*' + hold_key_str_l
+                for x in [str(self.macs), '']:
+                        if x + hold_key_str in mapper:
+                                _target = x + hold_key_str
+                                break
+                        if x + '#' + hold_key_str in mapper:
+                                if self.__hold_key == 0:
+                                        _target = x + '#' + hold_key_str
+                                        break
+                        if x + '*' + hold_key_str_l in mapper:
+                                _target = x + '*' + hold_key_str_l
 
                 if _target:
                         t = threading.Thread(target=mapper[_target][1],

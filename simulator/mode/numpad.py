@@ -9,8 +9,7 @@ from . import base
 
 class _NumpadMapping(base.BaseMapping):
         """
-        Numpad: 小键盘模式
-        可切换以下模式 [Rshift, A]: Normal
+        numpad: 小键盘模式
         """
 
         def __init__(self):
@@ -19,30 +18,30 @@ class _NumpadMapping(base.BaseMapping):
 
         def press(self):
                 mapper = {
-                        "['Q']": ('Numpad7', True),
-                        "['W']": ('Numpad8', True),
-                        "['E']": ('Numpad9', True),
-                        "['A']": ('Numpad4', True),
-                        "['S']": ('Numpad5', True),
-                        "['D']": ('Numpad6', True),
-                        "['Z']": ('Numpad1', True),
-                        "['X']": ('Numpad2', True),
-                        "['C']": ('Numpad3', True),
+                        '0*Q': ('Numpad7', True),
+                        '0*W': ('Numpad8', True),
+                        '0*E': ('Numpad9', True),
+                        '0*A': ('Numpad4', True),
+                        '0*S': ('Numpad5', True),
+                        '0*D': ('Numpad6', True),
+                        '0*Z': ('Numpad1', True),
+                        '0*X': ('Numpad2', True),
+                        '0*C': ('Numpad3', True),
 
-                        '*7': ('Numpad7', True),
-                        '*8': ('Numpad8', True),
-                        '*9': ('Numpad9', True),
-                        '*4': ('Numpad4', True),
-                        '*5': ('Numpad5', True),
-                        '*6': ('Numpad6', True),
-                        '*1': ('Numpad1', True),
-                        '*2': ('Numpad2', True),
-                        '*3': ('Numpad3', True),
+                        '0*7': ('Numpad7', True),
+                        '0*8': ('Numpad8', True),
+                        '0*9': ('Numpad9', True),
+                        '0*4': ('Numpad4', True),
+                        '0*5': ('Numpad5', True),
+                        '0*6': ('Numpad6', True),
+                        '0*1': ('Numpad1', True),
+                        '0*2': ('Numpad2', True),
+                        '0*3': ('Numpad3', True),
 
-                        "['Rshift', 'Oem_Plus']": ('Add', True),  # +
-                        "['Oem_Minus']": ('Subtract', True),  # -
-                        "['Oem_2']": ('Divide', True),  # /
-                        "['Rshift', '8']": ('Multiply', True),  # *
+                        '2*Oem_Plus': ('Add', True),  # +
+                        '0*Oem_Minus': ('Subtract', True),  # -
+                        '0*Oem_2': ('Divide', True),  # /
+                        '2*8': ('Multiply', True),  # *
                 }
                 result = dict(map(lambda x: (x, self._key_remap(mapper[x])), mapper))
 
@@ -52,30 +51,30 @@ class _NumpadMapping(base.BaseMapping):
 
         def release(self):
                 mapper = {
-                        "['Q']": ('Numpad7', False),
-                        "['W']": ('Numpad8', False),
-                        "['E']": ('Numpad9', False),
-                        "['A']": ('Numpad4', False),
-                        "['S']": ('Numpad5', False),
-                        "['D']": ('Numpad6', False),
-                        "['Z']": ('Numpad1', False),
-                        "['X']": ('Numpad2', False),
-                        "['C']": ('Numpad3', False),
+                        '0*Q': ('Numpad7', False),
+                        '0*W': ('Numpad8', False),
+                        '0*E': ('Numpad9', False),
+                        '0*A': ('Numpad4', False),
+                        '0*S': ('Numpad5', False),
+                        '0*D': ('Numpad6', False),
+                        '0*Z': ('Numpad1', False),
+                        '0*X': ('Numpad2', False),
+                        '0*C': ('Numpad3', False),
 
-                        '*7': ('Numpad7', False),
-                        '*8': ('Numpad8', False),
-                        '*9': ('Numpad9', False),
-                        '*4': ('Numpad4', False),
-                        '*5': ('Numpad5', False),
-                        '*6': ('Numpad6', False),
-                        '*1': ('Numpad1', False),
-                        '*2': ('Numpad2', False),
-                        '*3': ('Numpad3', False),
+                        '0*7': ('Numpad7', False),
+                        '0*8': ('Numpad8', False),
+                        '0*9': ('Numpad9', False),
+                        '0*4': ('Numpad4', False),
+                        '0*5': ('Numpad5', False),
+                        '0*6': ('Numpad6', False),
+                        '0*1': ('Numpad1', False),
+                        '0*2': ('Numpad2', False),
+                        '0*3': ('Numpad3', False),
 
-                        "['Rshift', 'Oem_Plus']": ('Add', False),  # +
-                        "['Oem_Minus']": ('Subtract', False),  # -
-                        "['Oem_2']": ('Divide', False),  # /
-                        "['Rshift', '8']": ('Multiply', False),  # *
+                        '2*Oem_Plus': ('Add', False),  # +
+                        '0*Oem_Minus': ('Subtract', False),  # -
+                        '0*Oem_2': ('Divide', False),  # /
+                        '2*8': ('Multiply', False),  # *
                 }
                 result = dict(map(lambda x: (x, self._key_remap(mapper[x])), mapper))
                 result.update(super().release())
