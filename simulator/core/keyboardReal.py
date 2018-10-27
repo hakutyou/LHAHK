@@ -1,3 +1,5 @@
+# coding=utf-8
+
 __all__ = ['KeyboardReal']
 
 import win32api
@@ -9,7 +11,7 @@ from . import keyboardBase
 
 class KeyboardReal(keyboardBase.KeyboardBase):
         def __init__(self):
-                super().__init__()
+                super(__class__, self).__init__()
                 self._locker = [0]
 
         def key_once(self, key: str, state: bool, hwnd):

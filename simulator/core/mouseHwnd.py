@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import win32api
 import win32con
 
@@ -6,7 +8,7 @@ from . import mouseBase
 
 class MouseHwnd(mouseBase.MouseBase):
         def __init__(self):
-                super().__init__()
+                super(__class__, self).__init__()
                 self.__OPERATE_MAPPING = {
                         'left': (win32con.WM_LBUTTONUP,         # 0, False
                                  win32con.WM_LBUTTONDOWN,       # 1, True

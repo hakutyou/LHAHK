@@ -1,9 +1,11 @@
+# coding=utf-8
+
 __all__ = ['MouseBase']
 
 import general
 
 
-class MouseBase:
+class MouseBase(object):
         def __init__(self):
                 pass
 

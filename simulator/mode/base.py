@@ -1,7 +1,9 @@
+# coding=utf-8
+
 __all__ = ['BaseMapping']
 
 
-class BaseMapping:
+class BaseMapping(object):
         """
         Base: base function for every mode
         """

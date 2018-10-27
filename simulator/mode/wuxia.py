@@ -1,3 +1,5 @@
+# coding=utf-8
+
 __all__ = ['wuxiaMapping']
 
 import threading
@@ -16,7 +18,7 @@ class _WuxiaMapping(base.BaseMapping):
         """
 
         def __init__(self):
-                super().__init__()
+                super(__class__, self).__init__()
                 self.MODE = 'wuxia'
 
                 self.hwnd = None
@@ -25,23 +27,23 @@ class _WuxiaMapping(base.BaseMapping):
 
         def press(self):
                 result = {
-                        '2*F2': self.choose_hwnd(),
-                        '2*F3': self.cancel_hwnd(),
-                        '2*F5': self.clear_auction(1),
-                        '2*F6': self.rush_voyage(4),
-                        '2*F7': self.rush_voyage(5),
-                        '2*F8': self.rush_key(['W', 'G'], 1),
-                        '2*F9': self.rush_click(),
-                        '2*F10': self.rush_stop(),
-                        '2*F11': self.rush_key(['F']),
+                        '0002*F2': self.choose_hwnd(),
+                        '0002*F3': self.cancel_hwnd(),
+                        '0002*F5': self.clear_auction(1),
+                        '0002*F6': self.rush_voyage(4),
+                        '0002*F7': self.rush_voyage(5),
+                        '0002*F8': self.rush_key(['W', 'G'], 1),
+                        '0002*F9': self.rush_click(),
+                        '0002*F10': self.rush_stop(),
+                        '0002*F11': self.rush_key(['F']),
                 }
-                result.update({'*Escape': general_lib.switch_mode('normal', normal.normalMapping, self.rush_stop()[1])})
-                result.update(super().press())
+                result.update({'*Escape': general_lib.switch_mode(normal.normalMapping, self.rush_stop()[1])})
+                result.update(super(__class__, self).press())
                 return result
 
         def release(self):
                 result = {}
-                result.update(super().press())
+                result.update(super(__class__, self).press())
                 return result
 
         def choose_hwnd(self):

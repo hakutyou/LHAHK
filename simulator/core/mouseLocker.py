@@ -1,9 +1,11 @@
+# coding=utf-8
+
 __all__ = ['MouseLocker']
 
 from ctypes import *
 
 
-class MouseLocker:
+class MouseLocker(object):
         def __init__(self):
                 pass
 

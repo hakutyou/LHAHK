@@ -1,3 +1,5 @@
+# coding=utf-8
+
 __all__ = ['MouseReal']
 
 import win32con
@@ -10,7 +12,7 @@ from . import mouseLocker
 
 class MouseReal(mouseBase.MouseBase):
         def __init__(self):
-                super().__init__()
+                super(__class__, self).__init__()
                 self.locker = mouseLocker.MouseLocker()
                 self.__OPERATE_MAPPING = {
                         'left': (win32con.MOUSEEVENTF_LEFTUP,          # 0, False

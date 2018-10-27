@@ -1,9 +1,11 @@
+# coding=utf-8
+
 __all__ = ['QmlCall']
 
 import PyQt5.QtCore
 
 
-class QmlCall:
+class QmlCall(object):
         def __init__(self):
                 self.root_object = None
 

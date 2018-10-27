@@ -1,3 +1,5 @@
+# coding=utf-8
+
 __all__ = ['VK_CODE', 'scan_code']
 
 import win32api

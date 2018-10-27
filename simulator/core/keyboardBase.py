@@ -1,9 +1,11 @@
+# coding=utf-8
+
 __all__ = ['KeyboardBase']
 
 import general
 
 
-class KeyboardBase:
+class KeyboardBase(object):
         def __init__(self):
                 pass
 

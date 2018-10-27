@@ -1,3 +1,5 @@
+# coding=utf-8
+
 __all__ = ['KeyboardHwnd']
 
 import win32api
@@ -9,7 +11,7 @@ from . import vkcode
 
 class KeyboardHwnd(keyboardBase.KeyboardBase):
         def __init__(self):
-                super().__init__()
+                super(__class__, self).__init__()
 
         def key_once(self, key: str, state: bool, hwnd=None):  # state = True 表示按下
                 if hwnd is None:

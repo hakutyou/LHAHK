@@ -1,3 +1,5 @@
+# coding=utf-8
+
 __all__ = ['KeyListen']
 
 import threading
@@ -9,21 +11,23 @@ import setting
 
 from simulator.mapping import mapping
 
-LShift = 0x01
-RShift = 0x02
-Shift = 0x03
-LControl = 0x04
-RControl = 0x08
-Control = 0x0c
-LMenu = 0x10
-RMenu = 0x20
-Meta = 0x30
-LWin = 0x40
-RWin = 0x80
-Win = 0xc0
+MACS = {
+        'Lshift':   0o0001,
+        'Rshift':   0o0002,
+        'Shift':    0o0004,
+        'Lcontrol': 0o0010,
+        'Rcontrol': 0o0020,
+        'Control':  0o0040,
+        'Lmenu':    0o0100,
+        'Rmenu':    0o0200,
+        'Menu':     0o0400,
+        'Lwin':     0o1000,
+        'Rwin':     0o2000,
+        'Win':      0o4000,
+}
 
 
-class KeyListen:
+class KeyListen(object):
         def __init__(self):
                 self.__hold_key = 0
                 self.pressed_key = []
@@ -39,23 +43,19 @@ class KeyListen:
 
         @staticmethod
         def macs_record(key):
-                if key == 'Lshift':
-                        return LShift
-                elif key == 'Rshift':
-                        return RShift
-                elif key == 'Lmenu':
-                        return LMenu
-                elif key == 'Rmenu':
-                        return RMenu
-                elif key == 'Lcontrol':
-                        return LControl
-                elif key == 'Rcontrol':
-                        return RControl
-                elif key == 'Lwin':
-                        return LWin
-                elif key == 'Rwin':
-                        return RWin
+                if key in MACS:
+                        return MACS[key]
                 return 0
+
+        def macs_extend(self):
+                maybe = ['']
+                for i in '{0:04o}'.format(self.macs):
+                        if i == '1' or i == '2':
+                                maybe = list(map(lambda x: x+i, maybe)) +\
+                                        list(map(lambda x: x+'3', maybe))
+                        else:
+                                maybe = list(map(lambda x: x+i, maybe))
+                return maybe + ['']
 
         def on_key_response(self, event, state):
                 if self.is_lock:
@@ -107,7 +107,7 @@ class KeyListen:
                                 self.pressed_key.pop(p)
 
                 _target = ''
-                for x in [str(self.macs), '']:
+                for x in self.macs_extend():
                         if x + hold_key_str in mapper:
                                 _target = x + hold_key_str
                                 break

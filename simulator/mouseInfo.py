@@ -1,3 +1,5 @@
+# coding=utf-8
+
 __all__ = ['mouseInfo']
 
 import win32gui

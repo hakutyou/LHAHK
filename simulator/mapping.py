@@ -1,3 +1,5 @@
+# coding=utf-8
+
 __all__ = ['mapping']
 
 import setting
@@ -30,9 +32,7 @@ class Mapping:
         def release_mapping(self):
                 return self.__release_mapping
 
-        def mode_switch(self, mode: base.BaseMapping, exit_action=None):
-                if exit_action is not None:
-                        exit_action(None)
+        def mode_switch(self, mode: base.BaseMapping):
                 self.__mapping_switch(mode.MODE, mode.press(), mode.release())
                 interactive.qmlCaller.refresh_keylist()
 

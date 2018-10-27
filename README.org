@@ -46,10 +46,10 @@ pip install PyHook3
 只要按下 ~A~ 就会触发
 
 如果一直保持 ~A~ 为按下状态，会连续触发
-*** ~0['A']~
+*** ~0000['A']~
 如果 ~setting.MACS~ 不为 ~True~ ，则永远不会触发，如果 ~setting.MACS~ 为 ~True~ 则仅当按下 ~A~ 并未按下功能键时触发
 
-*** ~2*A~
+*** ~0002*A~
 如果 ~setting.MACS~ 不为 ~True~ ，则永远不会触发，如果 ~setting.MACS~ 为 ~True~ 则在 ~Lshift~ 按住时，只要按下 ~A~ 就会触发
 
 *** 注意

@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import sys
 import PyQt5.QtWidgets
 import PyQt5.QtQml

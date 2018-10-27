@@ -1,3 +1,5 @@
+# coding=utf-8
+
 __all__ = ['random_wait']
 
 import time

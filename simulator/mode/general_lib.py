@@ -1,3 +1,5 @@
+# coding=utf-8
+
 __all__ = ['switch_mode']
 
 import simulator.core
@@ -5,9 +7,11 @@ import simulator.core
 from simulator.mapping import mapping
 
 
-def switch_mode(intro, mode, exit_action=None):
-        return ('切换到 {0} 模式'.format(intro),
-                lambda _: mapping.mode_switch(mode, exit_action))
+def switch_mode(mode, exit_action=None):
+        if exit_action is not None:
+                exit_action(None)
+        return ('切换到 {0} 模式'.format(mode.MODE),
+                lambda _: mapping.mode_switch(mode))
 
 
 def click(x, y, key='left', hwnd=None, wait=.1):
