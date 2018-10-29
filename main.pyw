@@ -5,10 +5,10 @@ import PyQt5.QtWidgets
 import PyQt5.QtQml
 import PyQt5.QtGui
 
-import interactive
-import listen
-from simulator.mapping import mapping
-from simulator.mode.normal import normalMapping
+import dmail
+import kala
+from force.mapping import mapping
+from force.mode.normal import normalMapping
 
 
 if __name__ == '__main__':
@@ -17,11 +17,11 @@ if __name__ == '__main__':
         engine = PyQt5.QtQml.QQmlApplicationEngine()
         context = engine.rootContext()
 
-        listen.keyListener.start()
+        kala.keyListener.start()
         mapping.mode_switch(normalMapping)
-        context.setContextProperty('externer', interactive.qmlReceiver)
+        context.setContextProperty('externer', dmail.qmlReceiver)
         engine.load('qml/main.qml')
-        interactive.qmlCaller.set_root_object(engine.rootObjects()[0])
-        interactive.qmlCaller.refresh_keylist()
+        dmail.qmlCaller.set_root_object(engine.rootObjects()[0])
+        dmail.qmlCaller.refresh_keylist()
 
         app.exec_()

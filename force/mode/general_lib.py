@@ -2,9 +2,9 @@
 
 __all__ = ['switch_mode']
 
-import simulator.core
+import force.core
 
-from simulator.mapping import mapping
+from force.mapping import mapping
 
 
 def switch_mode(mode, exit_action=None):
@@ -16,13 +16,13 @@ def switch_mode(mode, exit_action=None):
 
 def click(x, y, key='left', hwnd=None, wait=.1):
         if hwnd is None:
-                simulator.core.mouse.click(key, x, y, hwnd, wait)
+                force.core.mouse.click(key, x, y, hwnd, wait)
         else:
-                simulator.core.mouseBack.click(key, x, y, hwnd, wait)
+                force.core.mouseBack.click(key, x, y, hwnd, wait)
 
 
 def input_key(key, hwnd):
         if hwnd is None:
-                simulator.core.keyboard.input_key(key)
+                force.core.keyboard.input_key(key)
         else:
-                simulator.core.keyboardBack.input_key(key, hwnd)
+                force.core.keyboardBack.input_key(key, hwnd)

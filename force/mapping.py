@@ -3,7 +3,7 @@
 __all__ = ['mapping']
 
 import setting
-import interactive
+import dmail
 
 from . import core
 from .mode import base
@@ -34,7 +34,7 @@ class Mapping:
 
         def mode_switch(self, mode: base.BaseMapping):
                 self.__mapping_switch(mode.MODE, mode.press(), mode.release())
-                interactive.qmlCaller.refresh_keylist()
+                dmail.qmlCaller.refresh_keylist()
 
         def __mapping_switch(self, mode, press_mapping=None, release_mapping=None):
                 self.__key_holder.lock()
@@ -51,7 +51,7 @@ class Mapping:
                                 self.__release_mapping[i] = release_mapping[i]
                 self.__key_holder.unlock()
                 if setting.TRAY:
-                        interactive.qmlCaller.tray_info('MODE switch', mode)
+                        dmail.qmlCaller.tray_info('MODE switch', mode)
 
 
 mapping = Mapping()

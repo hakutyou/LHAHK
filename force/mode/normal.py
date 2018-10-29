@@ -20,8 +20,8 @@ class _NormalMapping(base.BaseMapping):
         def press(self):
                 result = {
                         "0002#['A']": general_lib.switch_mode(numpad.numpadMapping),
-                        "0002#['Q']": general_lib.switch_mode(mouse.mouseMapping),
-                        "0002#['F10']": general_lib.switch_mode(wuxia.wuxiaMapping),
+                        "0002#['Z']": general_lib.switch_mode(mouse.mouseMapping),
+                        "0002#['X']": general_lib.switch_mode(wuxia.wuxiaMapping),
                 }
                 result.update(super(__class__, self).press())
                 return result

@@ -2,9 +2,9 @@
 
 __all__ = ['mouseMapping']
 
-from simulator.mouseInfo import mouseInfo
-import simulator.core
-import interactive
+from force.mouseInfo import mouseInfo
+import force.core
+import dmail
 
 from . import general_lib
 from . import base
@@ -79,7 +79,7 @@ class MouseMapping(base.BaseMapping):
 
         def speed_get(self):
                 def __speed_get(_):
-                        interactive.qmlCaller.tray_info('Speed', str(self._speed))
+                        dmail.qmlCaller.tray_info('Speed', str(self._speed))
 
                 return '查看速度', __speed_get
 
@@ -94,14 +94,14 @@ class MouseMapping(base.BaseMapping):
                                 x -= self.speed
                         else:
                                 x += self.speed
-                        simulator.core.mouse.move(x, y)
+                        force.core.mouse.move(x, y)
 
                 return '移动', __move
 
         @staticmethod
         def mouse_click(button, state):
                 def __mouse_click(_):
-                        simulator.core.mouse.key_once(button, state)
+                        force.core.mouse.key_once(button, state)
 
                 return '点击', __mouse_click
 
@@ -109,7 +109,7 @@ class MouseMapping(base.BaseMapping):
         def mouse_position():
                 def __mouse_position(_):
                         x, y = mouseInfo.mouse_position()
-                        interactive.qmlCaller.tray_info('Mouse', 'x:{0}, y:{1}'.format(x, y))
+                        dmail.qmlCaller.tray_info('Mouse', 'x:{0}, y:{1}'.format(x, y))
 
                 return '鼠标位置', __mouse_position
 

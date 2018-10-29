@@ -6,10 +6,10 @@ import threading
 from ctypes import *
 from functools import partial
 import PyHook3 as pyHook
-import simulator.core
+import force.core
 import setting
 
-from simulator.mapping import mapping
+from force.mapping import mapping
 
 MACS = {
         'Lshift':   0o0001,
@@ -42,12 +42,12 @@ class KeyListen(object):
                 hm.HookKeyboard()
 
         @staticmethod
-        def macs_record(key):
+        def macs_record(key) -> int:
                 if key in MACS:
                         return MACS[key]
                 return 0
 
-        def macs_extend(self):
+        def macs_extend(self) -> list:
                 maybe = ['']
                 for i in '{0:04o}'.format(self.macs):
                         if i == '1' or i == '2':
@@ -57,7 +57,7 @@ class KeyListen(object):
                                 maybe = list(map(lambda x: x+i, maybe))
                 return maybe + ['']
 
-        def on_key_response(self, event, state):
+        def on_key_response(self, event, state: bool) -> bool:
                 if self.is_lock:
                         return True
                 # if response and event.Key in self.hold_key:
@@ -126,5 +126,5 @@ class KeyListen(object):
                 return True
 
         @property
-        def is_lock(self):
-                return simulator.core.keyboard.is_lock()
+        def is_lock(self) -> bool:
+                return force.core.keyboard.is_lock()

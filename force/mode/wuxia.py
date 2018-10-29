@@ -4,8 +4,8 @@ __all__ = ['wuxiaMapping']
 
 import threading
 import general
-import simulator.core
-import simulator.mouseInfo
+import force.core
+import force.mouseInfo
 
 from . import general_lib
 from . import base
@@ -49,7 +49,7 @@ class _WuxiaMapping(base.BaseMapping):
         def choose_hwnd(self):
                 def __choose_hwnd(hwnd):
                         self.hwnd = hwnd
-                        self.mouse_x, self.mouse_y = simulator.mouseInfo.mouseInfo.mouse_position(hwnd)
+                        self.mouse_x, self.mouse_y = force.mouseInfo.mouseInfo.mouse_position(hwnd)
 
                 return '锁定激活窗口', __choose_hwnd
 
@@ -68,14 +68,14 @@ class _WuxiaMapping(base.BaseMapping):
         def rush_voyage(self, hosi):
                 def __rush_voyage_thread():
                         while self.rush_flags:
-                                simulator.core.mouseBack.click('left', 820, 180, self.hwnd, wait=.2)
+                                force.core.mouseBack.click('left', 820, 180, self.hwnd, wait=.2)
                                 general.random_wait()
                                 if hosi == 4:
-                                        simulator.core.mouseBack.click('right', 662 - 1, 351 - 26, self.hwnd)
+                                        force.core.mouseBack.click('right', 662 - 1, 351 - 26, self.hwnd)
                                 if hosi == 5:
-                                        simulator.core.mouseBack.click('right', 471 - 1, 423 - 26, self.hwnd)
+                                        force.core.mouseBack.click('right', 471 - 1, 423 - 26, self.hwnd)
                                 general.random_wait()
-                                simulator.core.mouseBack.click('left', 971, 535, self.hwnd)
+                                force.core.mouseBack.click('left', 971, 535, self.hwnd)
                                 general.random_wait()
 
                 def __rush_voyage(_):
@@ -111,17 +111,17 @@ class _WuxiaMapping(base.BaseMapping):
                 def __clear_auction_thread():
                         while self.rush_flags:
                                 # 不计算边框坐标, (x-1, y-26)
-                                simulator.core.mouseBack.click('left', 405, 197, self.hwnd, wait=.2)  # 搜索
+                                force.core.mouseBack.click('left', 405, 197, self.hwnd, wait=.2)  # 搜索
                                 general.random_wait()
-                                simulator.core.mouseBack.click('left', 594, 260, self.hwnd, wait=.2)  # 第 which 个
+                                force.core.mouseBack.click('left', 594, 260, self.hwnd, wait=.2)  # 第 which 个
                                 general.random_wait()
-                                simulator.core.mouseBack.click('left', 994, 642, self.hwnd, wait=.2)  # 购买
+                                force.core.mouseBack.click('left', 994, 642, self.hwnd, wait=.2)  # 购买
                                 general.random_wait()
-                                simulator.core.mouseBack.click('left', 662, 470, self.hwnd, wait=.2)  # 数量
+                                force.core.mouseBack.click('left', 662, 470, self.hwnd, wait=.2)  # 数量
                                 general.random_wait()
-                                simulator.core.mouseBack.click('left', 597, 419, self.hwnd, wait=.2)  # 确认
+                                force.core.mouseBack.click('left', 597, 419, self.hwnd, wait=.2)  # 确认
                                 general.random_wait(.5)
-                                simulator.core.mouseBack.click('left', 700, 418, self.hwnd, wait=.2)  # 二次确认
+                                force.core.mouseBack.click('left', 700, 418, self.hwnd, wait=.2)  # 二次确认
                                 general.random_wait()
 
                 def __clear_auction(_):
@@ -137,7 +137,7 @@ class _WuxiaMapping(base.BaseMapping):
         def rush_click(self):
                 def __rush_click_thread():
                         if self.hwnd is None:
-                                mouse_x, mouse_y = simulator.mouseInfo.mouseInfo.mouse_position()
+                                mouse_x, mouse_y = force.mouseInfo.mouseInfo.mouse_position()
                         else:
                                 mouse_x, mouse_y = self.mouse_x, self.mouse_y
                         while self.rush_flags:

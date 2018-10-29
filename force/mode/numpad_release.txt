@@ -1,0 +1,27 @@
+{
+    "0000*Q": ("Numpad7", False),
+    "0000*W": ("Numpad8", False),
+    "0000*E": ("Numpad9", False),
+    "0000*A": ("Numpad4", False),
+    "0000*S": ("Numpad5", False),
+    "0000*D": ("Numpad6", False),
+    "0000*Z": ("Numpad1", False),
+    "0000*X": ("Numpad2", False),
+    "0000*C": ("Numpad3", False),
+    "0000*V": ("Numpad0", False),
+
+    "0000*7": ("Numpad7", False),
+    "0000*8": ("Numpad8", False),
+    "0000*9": ("Numpad9", False),
+    "0000*4": ("Numpad4", False),
+    "0000*5": ("Numpad5", False),
+    "0000*6": ("Numpad6", False),
+    "0000*1": ("Numpad1", False),
+    "0000*2": ("Numpad2", False),
+    "0000*3": ("Numpad3", False),
+
+    "0002*Oem_Plus": ("Add", False),        # +
+    "0000*Oem_Minus": ("Subtract", False),  # -
+    "0000*Oem_2": ("Divide", False),        # /
+    "0002*8": ("Multiply", False),          # *
+}
