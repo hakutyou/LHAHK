@@ -4,6 +4,7 @@ __all__ = ['KeyboardHwnd']
 
 import win32api
 import win32con
+import exception
 
 from . import keyboardBase
 from . import vkcode
@@ -13,9 +14,10 @@ class KeyboardHwnd(keyboardBase.KeyboardBase):
         def __init__(self):
                 super(__class__, self).__init__()
 
-        def key_once(self, key: str, state: bool, hwnd=None):  # state = True 表示按下
+        @exception.general_exception(False)
+        def key_once(self, key: str, state: bool, hwnd=None) -> bool:  # state = True 表示按下
                 if hwnd is None:
-                        return False
+                        raise exception.ObjectException('No hwnd get!')
                 virtual_code = vkcode.VK_CODE[key]
                 scan_code = vkcode.scan_code(virtual_code)
                 if state:

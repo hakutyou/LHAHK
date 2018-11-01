@@ -5,6 +5,7 @@ __all__ = ['MouseReal']
 import win32con
 import win32api
 import general
+import exception
 
 from . import mouseBase
 from . import mouseLocker
@@ -23,7 +24,7 @@ class MouseReal(mouseBase.MouseBase):
                                   win32con.MOUSEEVENTF_RIGHTDOWN),     # 1, True
                 }
 
-        def move_key_once(self, key: str, state: int, x, y, hwnd=None, lock=True):
+        def move_key_once(self, key: str, state: int, x, y, hwnd=None, lock=True) -> bool:
                 self.move(x, y)
                 if lock:
                         self.lock()
@@ -31,19 +32,18 @@ class MouseReal(mouseBase.MouseBase):
                 if lock:
                         self.unlock()
                 self.key_once(key, state)
+                return True
 
         @staticmethod
-        def move(x, y):
+        def move(x, y) -> None:
                 win32api.SetCursorPos((x, y))
 
-        def key_once(self, key, state):  # state = True(1) 表示按下
-                try:
-                        operate = self.__OPERATE_MAPPING[key][state]
-                except TypeError:
-                        operate = self.__OPERATE_MAPPING['left'][state]
+        @exception.general_exception(None)
+        def key_once(self, key, state) -> None:  # state = True(1) 表示按下
+                operate = self.__OPERATE_MAPPING[key][state]
                 win32api.mouse_event(operate, 0, 0, 0, 0)
 
-        def double_click(self, key, x, y, hwnd=None, lock=True):
+        def double_click(self, key, x, y, hwnd=None, lock=True) -> None:
                 if lock:
                         self.lock()
                 self.click(key, x, y, hwnd, False)
@@ -52,8 +52,8 @@ class MouseReal(mouseBase.MouseBase):
                 if lock:
                         self.unlock()
 
-        def lock(self):
+        def lock(self) -> None:
                 self.locker.lock()
 
-        def unlock(self):
+        def unlock(self) -> None:
                 self.locker.unlock()

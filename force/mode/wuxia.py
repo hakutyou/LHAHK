@@ -25,7 +25,8 @@ class _WuxiaMapping(base.BaseMapping):
                 self.mouse_x, self.mouse_y = 0, 0
                 self.rush_flags = False
 
-        def press(self):
+        @property
+        def press(self) -> dict:
                 result = {
                         '0002*F2': self.choose_hwnd(),
                         '0002*F3': self.cancel_hwnd(),
@@ -38,12 +39,13 @@ class _WuxiaMapping(base.BaseMapping):
                         '0002*F11': self.rush_key(['F']),
                 }
                 result.update({'*Escape': general_lib.switch_mode(normal.normalMapping, self.rush_stop()[1])})
-                result.update(super(__class__, self).press())
+                result.update(super(__class__, self).press)
                 return result
 
-        def release(self):
+        @property
+        def release(self) -> dict:
                 result = {}
-                result.update(super(__class__, self).press())
+                result.update(super(__class__, self).release)
                 return result
 
         def choose_hwnd(self):

@@ -60,7 +60,7 @@ Window {
                 menu.open()
             }
             else if (event === SystemTrayIcon.Trigger) {
-                showMessage('Mode', externer.get_mode())
+                showMessage('Mode', dmail.get_mode())
             }
         }
     }
@@ -70,7 +70,7 @@ Window {
     }
     function output_get () {
         resultList.clear()
-        resultList.append(externer.get_key_list())
+        resultList.append(dmail.get_key_list())
     }
 
     function tray_info (title, content) {

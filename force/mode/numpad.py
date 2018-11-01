@@ -19,17 +19,19 @@ class _NumpadMapping(base.BaseMapping):
                 super(__class__, self).__init__()
                 self.MODE = 'numpad'
 
-        def press(self):
+        @property
+        def press(self) -> dict:
                 mapper = Readfile('force/mode/numpad_press.txt')
                 result = dict(map(lambda x: (x, self.__key_remap(mapper.value[x])), mapper.value))
                 result.update({'*Escape': general_lib.switch_mode(normal.normalMapping)})
-                result.update(super(__class__, self).press())
+                result.update(super(__class__, self).press)
                 return result
 
-        def release(self):
+        @property
+        def release(self) -> dict:
                 mapper = Readfile('force/mode/numpad_release.txt')
                 result = dict(map(lambda x: (x, self.__key_remap(mapper.value[x])), mapper.value))
-                result.update(super(__class__, self).release())
+                result.update(super(__class__, self).release)
                 return result
 
         @staticmethod

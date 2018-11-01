@@ -2,6 +2,7 @@
 
 import win32api
 import win32con
+import exception
 
 from . import mouseBase
 
@@ -26,18 +27,19 @@ class MouseHwnd(mouseBase.MouseBase):
                         'right': win32con.MK_RBUTTON,
                 }
 
-        def move_key_once(self, key: str, state: int, x, y, hwnd=None, lock=False):
+        @exception.general_exception(False)
+        def move_key_once(self, key: str, state: int, x, y, hwnd=None, lock=False) -> bool:
                 if hwnd is None:
-                        return False
+                        raise exception.ObjectException('No hwnd get!')
                 long_position = win32api.MAKELONG(x, y)
                 try:
                         operate = self.__OPERATE_MAPPING[key][state]
                         button = self.__BUTTON_MAPPING[key]
                 except TypeError:
-                        operate = self.__OPERATE_MAPPING['left'][state]
-                        button = self.__BUTTON_MAPPING['left']
+                        raise exception.ObjectException('just left middle right accepted')
                 win32api.SendMessage(hwnd, operate, button, long_position)
+                return True
 
-        def double_click(self, key, x, y, hwnd=None, lock=False):
+        def double_click(self, key, x, y, hwnd=None, lock=False) -> None:
                 double_click = 2
                 self.move_key_once(key, double_click, x, y, hwnd)

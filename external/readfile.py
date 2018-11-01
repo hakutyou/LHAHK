@@ -4,6 +4,7 @@ __all__ = ['Readfile']
 
 import ast
 import setting
+import exception
 
 
 class Readfile:
@@ -11,27 +12,24 @@ class Readfile:
                 self.filename = filename
                 self.__value = None
 
-        def set_filename(self, filename: str):
+        def set_filename(self, filename: str) -> None:
                 self.filename = filename
                 self.__value = None
 
         @property
-        def value(self):
+        @exception.general_exception({})
+        def value(self) -> dict:
                 if self.filename is None:
-                        if setting.DEBUG:
-                                print('not setting filename')
+                        raise exception.PathException('not setting filename', False)
                 if self.__value is not None:
                         return self.__value
                 if setting.DEBUG:
                         print('readfile evaluate')
+
                 try:
                         self.__value = ast.literal_eval(open(self.filename, 'r').read())
                         return self.__value
                 except SyntaxError:
-                        if setting.INFO:
-                                print('extern file syntax: {0}'.format(self.filename))
-                        return {}
+                        raise exception.PathException('error file syntax: {path}'.format(path=self.filename))
                 except FileNotFoundError:
-                        if setting.DEBUG:
-                                print('no such file: {0}'.format(self.filename))
-                        return {}
+                        raise exception.PathException('no such file: {path}'.format(path=self.filename))

@@ -10,9 +10,9 @@ class MouseLocker(object):
                 pass
 
         @staticmethod
-        def lock():
+        def lock() -> None:
                 windll.user32.BlockInput(True)   # it works as admin
 
         @staticmethod
-        def unlock():
+        def unlock() -> None:
                 windll.user32.BlockInput(False)  # it works as admin

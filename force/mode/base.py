@@ -10,8 +10,10 @@ class BaseMapping(object):
         def __init__(self):
                 self.MODE = 'base'
 
-        def press(self):
+        @property
+        def press(self) -> dict:
                 return {}
 
-        def release(self):
+        @property
+        def release(self) -> dict:
                 return {}

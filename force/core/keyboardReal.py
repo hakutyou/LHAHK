@@ -14,7 +14,7 @@ class KeyboardReal(keyboardBase.KeyboardBase):
                 super(__class__, self).__init__()
                 self._locker = [0]
 
-        def key_once(self, key: str, state: bool, hwnd):
+        def key_once(self, key: str, state: bool, hwnd) -> bool:
                 virtual_code = vkcode.VK_CODE[key]
                 scan_code = vkcode.scan_code(virtual_code)
                 if state:
@@ -26,15 +26,15 @@ class KeyboardReal(keyboardBase.KeyboardBase):
                 self.unlock()
                 return True
 
-        def lock(self):
+        def lock(self) -> None:
                 if self._locker is not None:
                         self._locker[0] += 1
 
-        def unlock(self):
+        def unlock(self) -> None:
                 if self._locker is not None:
                         self._locker[0] -= 1
 
-        def is_lock(self):              # 锁定时不触发 keyboardReceive
+        def is_lock(self) -> bool:              # 锁定时不触发 keyboardReceive
                 if self._locker is None:
                         return False
                 return self._locker[0] > 0

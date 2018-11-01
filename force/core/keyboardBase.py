@@ -9,21 +9,21 @@ class KeyboardBase(object):
         def __init__(self):
                 pass
 
-        def key_once(self, key: str, state: bool, hwnd):  # state = True 表示按下)
-                pass    # 需要定义
+        def key_once(self, key: str, state: bool, hwnd) -> bool:  # state = True 表示按下)
+                return False    # 需要定义
 
-        def press(self, key, hwnd=None):
+        def press(self, key, hwnd=None) -> None:
                 self.key_once(key, True, hwnd)
 
-        def release(self, key, hwnd=None):
+        def release(self, key, hwnd=None) -> None:
                 self.key_once(key, False, hwnd)
 
-        def input_key(self, key, hwnd=None):
+        def input_key(self, key, hwnd=None) -> None:
                 self.press(key, hwnd)
                 general.random_wait()
                 self.release(key, hwnd)
 
-        def input_string(self, string, hwnd=None):
+        def input_string(self, string, hwnd=None) -> None:
                 probe = False
                 for ch in string:
                         if probe:

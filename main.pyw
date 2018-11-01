@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
         kala.keyListener.start()
         mapping.mode_switch(normalMapping)
-        context.setContextProperty('externer', dmail.qmlReceiver)
+        context.setContextProperty('dmail', dmail.qmlReceiver)
         engine.load('qml/main.qml')
         dmail.qmlCaller.set_root_object(engine.rootObjects()[0])
         dmail.qmlCaller.refresh_keylist()

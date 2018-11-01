@@ -17,18 +17,20 @@ class _NormalMapping(base.BaseMapping):
                 super(__class__, self).__init__()
                 self.MODE = 'normal'
 
-        def press(self):
+        @property
+        def press(self) -> dict:
                 result = {
                         "0002#['A']": general_lib.switch_mode(numpad.numpadMapping),
                         "0002#['Z']": general_lib.switch_mode(mouse.mouseMapping),
                         "0002#['X']": general_lib.switch_mode(wuxia.wuxiaMapping),
                 }
-                result.update(super(__class__, self).press())
+                result.update(super(__class__, self).press)
                 return result
 
-        def release(self):
+        @property
+        def release(self) -> dict:
                 result = {}
-                result.update(super(__class__, self).press())
+                result.update(super(__class__, self).release)
                 return result
 
         # @staticmethod
