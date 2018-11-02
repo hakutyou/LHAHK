@@ -6,3 +6,6 @@
 /*.zip
 *.pyc
 *.qmlc
+checkpoint
+/network/data/
+/network/model.ckpt*

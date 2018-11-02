@@ -75,7 +75,7 @@ class MouseMapping(base.BaseMapping):
         def exit_action(self, _) -> None:
                 for button in ['left', 'right']:
                         if self._key & self._key_mapper[button]:
-                                force.core.mouse.key_once(button, 0)
+                                force.core.mouse.real_mouse_up(button)
 
         def speed_set(self, number):
                 def __speed_set(_):
@@ -106,7 +106,7 @@ class MouseMapping(base.BaseMapping):
                                 x -= self.speed
                         else:
                                 x += self.speed
-                        force.core.mouse.move(x, y)
+                        force.core.mouse.real_move(x, y)
 
                 return '移动', __move
 
@@ -116,7 +116,7 @@ class MouseMapping(base.BaseMapping):
                                 self._key |= self._key_mapper[button]
                         else:
                                 self._key &= ~self._key_mapper[button]
-                        force.core.mouse.key_once(button, state)
+                        force.core.mouse.real_key_once(button, state)
 
                 return '点击', __mouse_click
 

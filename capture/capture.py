@@ -5,6 +5,7 @@ import win32ui
 from ctypes import windll
 import math
 from PIL import Image  # pillow
+import numpy as np
 import setting
 import exception
 
@@ -52,15 +53,27 @@ class Capture:
                         raise exception.ObjectException('Can\'t get image!')
                 x_max = self.image.size[0]
                 y_max = self.image.size[1]
-                if left < 0 or top < 0 or width < 0 or height < 0\
+                if left < 0 or top < 0 or width < 0 or height < 0 \
                         or left + width > x_max or top + height > y_max:
-                        setting.info('wrong argument: {left} {top} {width} {height} with'
-                                     'window {window_width} {window_height}'.format(
-                                        left=left, top=top, width=width, height=height,
-                                        window_width=x_max, window_height=y_max))
+                        raise Exception('wrong argument: {left} {top} {width} {height} with'
+                                        'window {window_width} {window_height}'.format(
+                                                left=left, top=top, width=width, height=height,
+                                                window_width=x_max, window_height=y_max))
                 right = x_max if width == 0 else left + width
                 bottom = y_max if height == 0 else top + height
                 self.image = self.image.crop((left, top, right, bottom))
+                return True
+
+        @exception.general_exception(False)
+        def resize(self, width: int = 0, height: int = 0) -> bool:
+                if self.image is None:
+                        raise exception.ObjectException('Can\'t get image!')
+                if width < 0 or height < 0:
+                        raise Exception('wrong argument: {width} {height}'.format(
+                                width=width, height=height))
+                width = self.image.size[0] if width == 0 else width
+                height = self.image.size[1] if height == 0 else height
+                self.image = self.image.resize((width, height), Image.ANTIALIAS)
                 return True
 
         @exception.general_exception(False)
@@ -76,11 +89,12 @@ class Capture:
                 return True
 
         @exception.general_exception(float('+inf'))
-        def similar(self, path: str, grey: bool=False) -> float:
+        def similar(self, path: str, grey: bool = False) -> float:
                 def __convert(image):
                         if grey:
                                 return image.convert('L')
                         return image
+
                 if self.image is None:
                         raise exception.ObjectException('Can\'t get image!')
                 h_image_1 = __convert(self.image).histogram()
@@ -95,16 +109,34 @@ class Capture:
                 self.image.show()
                 return True
 
+        @property
+        @exception.general_exception(np.asanyarray([]))
+        def network_data(self):
+                if self.image is None:
+                        raise exception.ObjectException('Can\'t get image!')
+                # !!!Need fix here!!!
+                return np.asarray(self.image.convert('1')).flatten() / 255
+
 
 if __name__ == '__main__':
+        from network.resnet import ResNet
         import time
 
+        resnet = ResNet()
+        resnet.build()
+
         capture = Capture()
-        while True:
-                time.sleep(1)
-                capture.shot()
-                capture.crop(100, 0, 100, 300)
-                result = capture.similar('C:/Users/kakoi/Desktop/1/1.bmp', False)
-                print(result)
-                # capture.save('')
-                # capture.show()
+        # while True:
+        # time.sleep(1)
+        capture.shot()
+        capture.crop(1409, 800, 8, 23)
+        capture.resize(28, 28)
+        print(resnet.read(capture.network_data))
+        # capture.file('C:/Users/kakoi/Desktop/1/1.bmp')
+        # capture.resize(100, 200)
+        # capture.shot()
+        # capture.crop(100, 0, 100, 300)
+        # result = capture.similar('C:/Users/kakoi/Desktop/1/1.bmp', grey=False)
+        # print(result)
+        # capture.save('')
+        capture.show()

@@ -43,14 +43,10 @@ class Mapping:
 
         def mode_switch(self, mode: base.BaseMapping, exit_action=None) -> None:
                 def __mapping_switch(_mode, press_mapping=None, release_mapping=None):
-                        # x, y = mouseInfo.mouse_position()
-                        # self.__mouse_holder.mouse_up('left', x, y)
-                        # self.__mouse_holder.mouse_up('right', x, y)
                         self.set_macs(0x00)
                         self.__key_holder.lock()
                         self.__key_holder.release('Rshift')
                         self.__key_holder.release('Escape')
-                        # kala.keyListener.clear_macs()
                         self.__mode[0] = _mode
                         if press_mapping is not None:
                                 self.__press_mapping.clear()
