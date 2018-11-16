@@ -1,0 +1,24 @@
+annotations/
+	captions_train2014.json
+	captions_val2014.json
+	instances_minival2014.json
+	instances_train2014.json
+	instances_val2014.json
+	instances_valminusminival2014.json
+	person_keypoints_train2014.json
+	person_keypoints_val2014.json
+train2014/
+    *
+val2014/
+    *
+
+http://cocodataset.org/#download
+
+下载地址：
+http://images.cocodataset.org/zips/train2014.zip
+http://images.cocodataset.org/zips/val2014.zip
+http://images.cocodataset.org/annotations/annotations_trainval2014.zip
+https://dl.dropboxusercontent.com/s/o43o90bna78omob/instances_minival2014.json.zip?dl=0
+https://dl.dropboxusercontent.com/s/s3tw5zcg7395368/instances_valminusminival2014.json.zip?dl=0
+
+instances_minival2014.json.zip 和 instances_valminusminival2014.json.zip 上传到 release

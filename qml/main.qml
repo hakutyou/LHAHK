@@ -42,6 +42,10 @@ Window {
 
         menu: Menu {
             MenuItem {
+                text: qsTr('WinSpy')
+                onTriggered: dmail.run_exec('winspy.exe')
+            }
+            MenuItem {
                 text: qsTr('Quit')
                 onTriggered: Qt.quit()
             }

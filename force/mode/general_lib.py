@@ -2,7 +2,7 @@
 
 __all__ = ['switch_mode']
 
-from force.mapping import mapping
+from force import mapping
 
 
 def switch_mode(mode, exit_action=None):

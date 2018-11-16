@@ -8,7 +8,7 @@ import PyHook3 as pyHook
 import force.core
 import setting
 
-from force.mapping import mapping
+from force import mapping
 
 MACS = {
         'Lshift': 0o0001,
@@ -87,7 +87,7 @@ class KeyListen(object):
                                         key=event.Key, key_list=self.pressed_key))
                         else:
                                 self.__hold_key += 1
-                        mapper = mapping.press_mapping
+                        mapper = mapping.press_mapping()
                         hold_key_str = str(self.pressed_key)
                 else:  # release
                         if setting.MACS:
@@ -97,7 +97,7 @@ class KeyListen(object):
                                         setting.debug('state = {macs}'.format(macs=mapping.get_macs()))
                                         return True
                         self.__hold_key = 0
-                        mapper = mapping.release_mapping
+                        mapper = mapping.release_mapping()
                         hold_key_str = str(self.pressed_key)
                         if event.Key in self.pressed_key:
                                 setting.debug('刚刚抬起了"{key}"键, {key_list}'.format(

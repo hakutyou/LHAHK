@@ -1,0 +1,40 @@
+* MaskRCNN
+#+BEGIN_SRC bash
+git clone https://github.com/matterport/Mask_RCNN
+pip install -r requirements.txt
+# mrcnn/model.py:2174 行 keepdims -> keep_dims
+# mrcnn/model.py:2198 行 keepdims -> keep_dims
+python setup.py install
+#+END_SRC
+
+* tensorflow for Python 3.7 on Windows
+[[https://github.com/fo40225/tensorflow-windows-wheel]]
+
+*Notice* version of *CUDA* and *cudnn*
+
+* 错误
+** Windows 下 pycocotools 编译错误
+#+BEGIN_SRC bash
+git clone https://github.com/philferriere/cocoapi
+cd cocoapi/PythonAPI
+python setup.py build_ext install
+#+END_SRC
+
+** TypeError: softmax() got an unexpected keyword argument 'axis'
+keras 版本过高
+#+BEGIN_SRC bash
+pip install keras==2.1
+#+END_SRC
+
+** TypeError: reduce_mean() got an unexpected keyword argument 'keepdims'
+#+BEGIN_EXAMPLE
+Python\lib\site-packages\mask_rcnn-2.1-py3.6.egg\mrcnn\model.py: 2174, 2198
+keepdims -> keep_dims
+#+END_EXAMPLE
+
+* Train
+准备 ~mask_rcnn_coco.h5~ 和 ~data~
+#+BEGIN_SRC bash
+cd coco
+python coco.py train --dataset=../data --model=coco
+#+END_SRC

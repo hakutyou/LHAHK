@@ -2,10 +2,15 @@
 /__pycache__/
 /build/
 /dist/
+/publish/
 /main.spec
 /*.zip
 *.pyc
 *.qmlc
 checkpoint
-/network/data/
-/network/model.ckpt*
+/network/ResNet/data/
+/network/ResNet/model.ckpt*
+/network/maskRCNN/images/*
+/network/maskRCNN/images-example/
+/network/maskRCNN/logs/
+/network/maskRCNN/*.h5

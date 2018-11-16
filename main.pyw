@@ -7,8 +7,8 @@ import PyQt5.QtGui
 
 import dmail
 import kala
-from force.mapping import mapping
-from force.mode.normal import normalMapping
+from force import mapping
+from force.mode import normal
 
 
 if __name__ == '__main__':
@@ -18,7 +18,7 @@ if __name__ == '__main__':
         context = engine.rootContext()
 
         kala.keyListener.start()
-        mapping.mode_switch(normalMapping)
+        mapping.mode_switch(normal)
         context.setContextProperty('dmail', dmail.qmlReceiver)
         engine.load('qml/main.qml')
         dmail.qmlCaller.set_root_object(engine.rootObjects()[0])

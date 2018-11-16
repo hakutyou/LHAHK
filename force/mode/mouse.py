@@ -1,132 +1,193 @@
 # coding=utf-8
 
-__all__ = ['mouseMapping']
+__all__ = ['MODE', 'press', 'release']
 
-from force.mouseInfo import mouseInfo
+import force
 import force.core
 import dmail
+import visual
+# import network
 
 from . import general_lib
-from . import base
 from . import normal
 
+MODE = 'mouse'
+__speed = 0
+__key = 0x0
+__key_mapper = {
+        'left': 0b0001,
+        'right': 0b0010,
+        'crop': 0b00010000,
+}
+# resnet = network.resnet.create()
 
-class MouseMapping(base.BaseMapping):
-        """
-        mouse: 鼠标模式
-        """
 
-        def __init__(self):
-                super(__class__, self).__init__()
-                self.MODE = 'mouse'
-                self._speed = 0
-                self._key = 0x0
-                self._key_mapper = {
-                        'left': 0b0001,
-                        'right': 0b0010,
-                }
+def press() -> dict:
+        result = {
+                '0000*0': _speed_set(0),
+                '0000*1': _speed_set(1),
+                '0000*2': _speed_set(2),
+                '0000*3': _speed_set(3),
+                '0000*4': _speed_set(4),
+                '0000*5': _speed_set(5),
+                '0000*6': _speed_set(6),
+                '0000*7': _speed_set(7),
+                '0000*8': _speed_set(8),
+                '0000*9': _speed_set(9),
+                '0000*X': _speed_set(None),
+                '0000*Z': _speed_get(),
+                '0000#Q': _mouse_click('left', 1),
+                '0000#E': _mouse_click('right', 1),
+                '0000*R': _mouse_position(),
+                '0000*W': _move('W'),
+                '0000*S': _move('S'),
+                '0000*A': _move('A'),
+                '0000*D': _move('D'),
+                '0000*Up': _move('W'),
+                '0000*Down': _move('S'),
+                '0000*Left': _move('A'),
+                '0000*Right': _move('D'),
+                '0000#P': _crop(True),
+                '0000#O': _show(),
+                # '0000#I': _mnist(),
+        }
+        result.update({'*Escape': general_lib.switch_mode(normal, exit_action)})
+        return result
 
-        @property
-        def speed(self):
-                if self._speed < 1:
+
+def release() -> dict:
+        return {
+                '*Q': _mouse_click('left', 0),
+                '*E': _mouse_click('right', 0),
+                '*P': _crop(False),
+        }
+
+
+def exit_action(_) -> None:
+        for button in ['left', 'right']:
+                if __key & __key_mapper[button]:
+                        force.core.mouse.real_mouse_up(button)
+
+
+def _speed_set(number):
+        def __speed_set(_):
+                global __speed
+                if number is None:
+                        __speed = 0
+                        return
+                __speed *= 10
+                if __speed > 10000:
+                        __speed = 0
+                __speed += number
+
+        return '修改速度', __speed_set
+
+
+def _speed_get():
+        def __speed_get(_):
+                dmail.qmlCaller.tray_info('Speed', str(__speed))
+
+        return '查看速度', __speed_get
+
+
+def _move(direct):
+        def __move_speed():
+                if __speed < 1:
                         return 1
-                return self._speed
+                return __speed
 
-        @property
-        def press(self) -> dict:
-                result = {
-                        '0000*0': self.speed_set(0),
-                        '0000*1': self.speed_set(1),
-                        '0000*2': self.speed_set(2),
-                        '0000*3': self.speed_set(3),
-                        '0000*4': self.speed_set(4),
-                        '0000*5': self.speed_set(5),
-                        '0000*6': self.speed_set(6),
-                        '0000*7': self.speed_set(7),
-                        '0000*8': self.speed_set(8),
-                        '0000*9': self.speed_set(9),
-                        '0000*X': self.speed_set(None),
-                        '0000*Z': self.speed_get(),
-                        '0000#Q': self.mouse_click('left', 1),
-                        '0000#E': self.mouse_click('right', 1),
-                        '0000*R': self.mouse_position(),
-                        '0000*W': self.move('W'),
-                        '0000*S': self.move('S'),
-                        '0000*A': self.move('A'),
-                        '0000*D': self.move('D'),
-                        '0000*Up': self.move('W'),
-                        '0000*Down': self.move('S'),
-                        '0000*Left': self.move('A'),
-                        '0000*Right': self.move('D')
-                }
-                result.update({'*Escape': general_lib.switch_mode(normal.normalMapping, self.exit_action)})
-                result.update(super(__class__, self).press)
-                return result
+        def __move(_):
+                x, y = force.mouseInfo.mouse_position()
+                if direct == 'W':
+                        y -= __move_speed()
+                elif direct == 'S':
+                        y += __move_speed()
+                elif direct == 'A':
+                        x -= __move_speed()
+                else:
+                        x += __move_speed()
+                force.core.mouse.real_move(x, y)
 
-        @property
-        def release(self) -> dict:
-                result = {
-                        '0000*Q': self.mouse_click('left', 0),
-                        '0000*E': self.mouse_click('right', 0),
-                }
-                result.update(super(__class__, self).release)
-                return result
+        return '移动', __move
 
-        def exit_action(self, _) -> None:
-                for button in ['left', 'right']:
-                        if self._key & self._key_mapper[button]:
-                                force.core.mouse.real_mouse_up(button)
 
-        def speed_set(self, number):
-                def __speed_set(_):
-                        if number is None:
-                                self._speed = 0
+def _mouse_click(button, state):
+        def __mouse_click(_):
+                global __key
+                if state == 1:
+                        __key |= __key_mapper[button]
+                else:
+                        if not __key & __key_mapper[button]:
                                 return
-                        self._speed *= 10
-                        if self._speed > 10000:
-                                self._speed = 0
-                        self._speed += number
+                        __key &= ~__key_mapper[button]
+                force.core.mouse.real_key_once(button, state)
 
-                return '修改速度', __speed_set
-
-        def speed_get(self):
-                def __speed_get(_):
-                        dmail.qmlCaller.tray_info('Speed', str(self._speed))
-
-                return '查看速度', __speed_get
-
-        def move(self, direct):
-                def __move(_):
-                        x, y = mouseInfo.mouse_position()
-                        if direct == 'W':
-                                y -= self.speed
-                        elif direct == 'S':
-                                y += self.speed
-                        elif direct == 'A':
-                                x -= self.speed
-                        else:
-                                x += self.speed
-                        force.core.mouse.real_move(x, y)
-
-                return '移动', __move
-
-        def mouse_click(self, button, state):
-                def __mouse_click(_):
-                        if state == 1:
-                                self._key |= self._key_mapper[button]
-                        else:
-                                self._key &= ~self._key_mapper[button]
-                        force.core.mouse.real_key_once(button, state)
-
-                return '点击', __mouse_click
-
-        @staticmethod
-        def mouse_position():
-                def __mouse_position(_):
-                        x, y = mouseInfo.mouse_position()
-                        dmail.qmlCaller.tray_info('Mouse', 'x:{0}, y:{1}'.format(x, y))
-
-                return '鼠标位置', __mouse_position
+        return '点击', __mouse_click
 
 
-mouseMapping = MouseMapping()
+def _mouse_position():
+        def __mouse_position(hwnd):
+                x, y = force.mouseInfo.mouse_position()
+                x_win, y_win, _, _ = force.mouseInfo.window_position(hwnd)
+                dmail.qmlCaller.tray_info('Mouse', 'x:{0}, y:{1}\nx:{2}, y:{3}'.format(
+                        x, y, x - x_win, y - y_win))
+
+        return '鼠标位置', __mouse_position
+
+
+__crop_start_x = 0
+__crop_start_y = 0
+__crop_end_x = 0
+__crop_end_y = 0
+
+
+def _crop(start: bool):
+        def __check_and_crop(hwnd):
+                global __key, __crop_start_x, __crop_end_x, __crop_start_y, __crop_end_y
+                if start:
+                        __key |= __key_mapper['crop']
+                        __crop_start_x, __crop_start_y = force.mouseInfo.mouse_position(hwnd)
+                else:
+                        if not __key & __key_mapper['crop']:
+                                return
+                        __key &= ~__key_mapper['crop']
+                        __crop_end_x, __crop_end_y = force.mouseInfo.mouse_position(hwnd)
+
+        return '选定截图', __check_and_crop
+
+
+def _show():
+        def __show(hwnd):
+                image = visual.Image()
+                image.shot(hwnd)
+                image.crop(min(__crop_start_x, __crop_end_x), min(__crop_start_y, __crop_end_y),
+                           abs(__crop_start_x - __crop_end_x), abs(__crop_start_y - __crop_end_y))
+                image.show()
+
+        return '截图', __show
+
+
+# def _mnist():
+#         def __mnist(hwnd):
+#                 image = visual.Image()
+#                 image.shot(hwnd)
+#                 image.crop(min(__crop_start_x, __crop_end_x), min(__crop_start_y, __crop_end_y),
+#                            abs(__crop_start_x - __crop_end_x), abs(__crop_start_y - __crop_end_y))
+#                 image.resize(28, 28)
+#                 image.grey()
+#                 arr = visual.imath.binary(visual.imath.transform_array(image))
+#                 network.resnet.build(resnet)
+#                 print(network.resnet.read(resnet, arr.flatten()))
+#
+#         return 'MNIST', __mnist
+
+# resnet = network.ResNet()
+# resnet.build()
+# image = visual.Image()
+# image.open('C:/Users/kakoi/Desktop/1.png')
+# image.grey()
+# arr = visual.imath.binary(visual.imath.transform_array(image)).flatten() / 255
+# print(arr)
+# # image.read(arr)
+# # image.show()
+# print(resnet.read(arr))
